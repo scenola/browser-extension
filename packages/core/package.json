@@ -1,0 +1,17 @@
+{
+  "name": "@mt/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/application/testing/in-memory.ts"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project core"
+  },
+  "devDependencies": {
+    "fast-check": "4.10.2"
+  }
+}
