@@ -1,0 +1,925 @@
+{
+  "components": {
+    "schemas": {
+      "Body_exchangeIntegrationToken": {
+        "properties": {
+          "code": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Code",
+            "type": "string"
+          },
+          "code_verifier": {
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Code Verifier",
+            "type": "string"
+          },
+          "grant_type": {
+            "const": "authorization_code",
+            "title": "Grant Type",
+            "type": "string"
+          },
+          "redirect_uri": {
+            "maxLength": 512,
+            "minLength": 1,
+            "title": "Redirect Uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grant_type",
+          "code",
+          "code_verifier",
+          "redirect_uri"
+        ],
+        "title": "Body_exchangeIntegrationToken",
+        "type": "object"
+      },
+      "EvidenceIds": {
+        "additionalProperties": false,
+        "properties": {
+          "imdb": {
+            "anyOf": [
+              {
+                "maxLength": 12,
+                "pattern": "^tt[0-9]{5,10}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imdb"
+          },
+          "provider": {
+            "items": {
+              "$ref": "#/components/schemas/ProviderEvidence"
+            },
+            "maxItems": 8,
+            "title": "Provider",
+            "type": "array"
+          },
+          "tmdb": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tmdb"
+          },
+          "tvdb": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tvdb"
+          }
+        },
+        "title": "EvidenceIds",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "IntegrationConnectionResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "account_key": {
+            "title": "Account Key",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "finish_threshold_percent": {
+            "enum": [
+              50,
+              70,
+              90
+            ],
+            "title": "Finish Threshold Percent",
+            "type": "integer"
+          },
+          "start_floor_seconds": {
+            "title": "Start Floor Seconds",
+            "type": "integer"
+          },
+          "start_threshold_percent": {
+            "anyOf": [
+              {
+                "enum": [
+                  5,
+                  10,
+                  20
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Threshold Percent"
+          },
+          "status": {
+            "enum": [
+              "awaiting_binding",
+              "active",
+              "braked",
+              "suspended",
+              "revoked"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "created_at",
+          "expires_at",
+          "start_threshold_percent",
+          "start_floor_seconds",
+          "finish_threshold_percent",
+          "account_key"
+        ],
+        "title": "IntegrationConnectionResponse",
+        "type": "object"
+      },
+      "IntegrationTokenResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "access_token": {
+            "title": "Access Token",
+            "type": "string"
+          },
+          "expires_in": {
+            "title": "Expires In",
+            "type": "integer"
+          },
+          "token_type": {
+            "const": "DPoP",
+            "title": "Token Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "access_token",
+          "token_type",
+          "expires_in"
+        ],
+        "title": "IntegrationTokenResponse",
+        "type": "object"
+      },
+      "PlayAcceptedResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "braked",
+                  "plus_lapsed",
+                  "dormant_return"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "text_only",
+                  "numbering_unconfirmed",
+                  "numbering_unknown",
+                  "new_player",
+                  "shared_player",
+                  "catalog_timeout"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "not_completed",
+                  "medium_not_served",
+                  "not_served",
+                  "unknown_id",
+                  "other_account",
+                  "refused_player",
+                  "status_stands",
+                  "not_placed"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "revoked",
+                  "account_deletion",
+                  "user"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "scrobble_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scrobble Id"
+          },
+          "state": {
+            "enum": [
+              "received",
+              "awaiting_catalog",
+              "held",
+              "needs_confirmation",
+              "recorded",
+              "duplicate",
+              "started",
+              "ignored",
+              "dismissed",
+              "expired"
+            ],
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scrobble_id",
+          "state",
+          "reason"
+        ],
+        "title": "PlayAcceptedResponse",
+        "type": "object"
+      },
+      "PlayEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "duration_seconds": {
+            "anyOf": [
+              {
+                "maximum": 604800,
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Seconds"
+          },
+          "ended": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ended"
+          },
+          "episode_number": {
+            "anyOf": [
+              {
+                "maximum": 100000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Episode Number"
+          },
+          "furthest_position_seconds": {
+            "anyOf": [
+              {
+                "maximum": 604800,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Furthest Position Seconds"
+          },
+          "ids": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvidenceIds"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "kind": {
+            "enum": [
+              "movie",
+              "episode"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "played_seconds": {
+            "anyOf": [
+              {
+                "maximum": 604800,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Played Seconds"
+          },
+          "report": {
+            "default": "viewing",
+            "enum": [
+              "viewing",
+              "start"
+            ],
+            "title": "Report",
+            "type": "string"
+          },
+          "season_number": {
+            "anyOf": [
+              {
+                "maximum": 10000,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Season Number"
+          },
+          "show": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShowEvidence"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "story_seconds": {
+            "anyOf": [
+              {
+                "maximum": 604800,
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Story Seconds"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "watched_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Watched At"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "maximum": 2200,
+                "minimum": 1870,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "title": "PlayEvidence",
+        "type": "object"
+      },
+      "PlayReceiptResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "episode_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Episode Id"
+          },
+          "question_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question Key"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "braked",
+                  "plus_lapsed",
+                  "dormant_return"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "text_only",
+                  "numbering_unconfirmed",
+                  "numbering_unknown",
+                  "new_player",
+                  "shared_player",
+                  "catalog_timeout"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "not_completed",
+                  "medium_not_served",
+                  "not_served",
+                  "unknown_id",
+                  "other_account",
+                  "refused_player",
+                  "status_stands",
+                  "not_placed"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "revoked",
+                  "account_deletion",
+                  "user"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "scrobble_id": {
+            "title": "Scrobble Id",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "received",
+              "awaiting_catalog",
+              "held",
+              "needs_confirmation",
+              "recorded",
+              "duplicate",
+              "started",
+              "ignored",
+              "dismissed",
+              "expired"
+            ],
+            "title": "State",
+            "type": "string"
+          },
+          "title_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title Id"
+          }
+        },
+        "required": [
+          "scrobble_id",
+          "state",
+          "reason",
+          "title_id",
+          "episode_id",
+          "question_key"
+        ],
+        "title": "PlayReceiptResponse",
+        "type": "object"
+      },
+      "ProviderEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z][A-Za-z0-9._-]*$",
+            "title": "Key",
+            "type": "string"
+          },
+          "namespace": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9._-]*$",
+            "title": "Namespace",
+            "type": "string"
+          },
+          "value": {
+            "maxLength": 200,
+            "minLength": 1,
+            "pattern": "^[ !#-\\[\\]-~]+$",
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "namespace",
+          "key",
+          "value"
+        ],
+        "title": "ProviderEvidence",
+        "type": "object"
+      },
+      "ShowEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "ids": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EvidenceIds"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "maximum": 2200,
+                "minimum": 1870,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          }
+        },
+        "title": "ShowEvidence",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "DpopProof": {
+        "in": "header",
+        "name": "DPoP",
+        "type": "apiKey"
+      },
+      "ScrobblerCredential": {
+        "scheme": "bearer",
+        "type": "http"
+      },
+      "ScrobblerDpopCredential": {
+        "scheme": "DPoP",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "The routes MediaTracker for Chrome calls, extracted from the backend’s API document by `tools/openapi/extract-subset.ts`. Generated: change it with `pnpm openapi:sync`, never by hand.",
+    "title": "MediaTracker Backend",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/v1/integrations/connection": {
+      "get": {
+        "operationId": "getIntegrationConnection",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationConnectionResponse"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "ScrobblerCredential": []
+          },
+          {
+            "ScrobblerDpopCredential": []
+          },
+          {
+            "DpopProof": []
+          }
+        ],
+        "tags": [
+          "integrations"
+        ]
+      }
+    },
+    "/v1/integrations/oauth/token": {
+      "post": {
+        "operationId": "exchangeIntegrationToken",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "DPoP",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 4096,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Dpop"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_exchangeIntegrationToken"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationTokenResponse"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "tags": [
+          "integrations"
+        ]
+      }
+    },
+    "/v1/integrations/plays": {
+      "post": {
+        "operationId": "reportIntegrationPlay",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlayEvidence"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayAcceptedResponse"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "ScrobblerCredential": []
+          },
+          {
+            "ScrobblerDpopCredential": []
+          },
+          {
+            "DpopProof": []
+          }
+        ],
+        "tags": [
+          "integrations"
+        ]
+      }
+    },
+    "/v1/integrations/plays/{scrobble_id}": {
+      "get": {
+        "operationId": "getIntegrationPlay",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scrobble_id",
+            "required": true,
+            "schema": {
+              "maxLength": 26,
+              "minLength": 26,
+              "pattern": "^[01234567ILOilo][0123456789ABCDEFGHIJKLMNOPQRSTVWXYZabcdefghijklmnopqrstvwxyz]{25}$",
+              "title": "Scrobble Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayReceiptResponse"
+                }
+              }
+            },
+            "description": ""
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "ScrobblerCredential": []
+          },
+          {
+            "ScrobblerDpopCredential": []
+          },
+          {
+            "DpopProof": []
+          }
+        ],
+        "tags": [
+          "integrations"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "integrations"
+    }
+  ]
+}

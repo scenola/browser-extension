@@ -1,0 +1,18 @@
+{
+  "name": "@mt/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run --root ../.. --project api"
+  },
+  "dependencies": {
+    "@mt/core": "workspace:*"
+  },
+  "devDependencies": {
+    "jose": "6.2.12"
+  }
+}
