@@ -1,0 +1,167 @@
+# A `v*` tag becomes a GitHub release: every pull-request gate, a store
+# build made twice — here and from a second checkout in another directory — and zipped twice
+# (the two builds and the two zips must be the same bytes), the zip's SHA-256 and
+# the build fingerprint in the notes, a build-provenance attestation of the zip, and the zip on
+# the release. No store credentials exist here: a maintainer signs the package with the offline
+# key and uploads it to the Chrome Web Store by hand (Verified CRX uploads).
+#
+# Repository variables (not secrets — they are public URLs, and the zip carries them anyway):
+# MT_API_BASE_URL and MT_WEB_APP_BASE_URL, the production origins. A store build refuses to run
+# without them.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  gates:
+    name: Pull-request gates
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    name: Store build and zip
+    needs: gates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    # Builds run third-party code (every dev dependency's build step), so this job holds no
+    # write token and no identity token; the job that attests and publishes runs none.
+    permissions:
+      contents: read
+    outputs:
+      zip: ${{ steps.zip.outputs.zip }}
+      sha256: ${{ steps.zip.outputs.sha256 }}
+    env:
+      MT_API_BASE_URL: ${{ vars.MT_API_BASE_URL }}
+      MT_WEB_APP_BASE_URL: ${{ vars.MT_WEB_APP_BASE_URL }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # No cache: a release installs from the registry against the lockfile's integrity
+      # hashes, never from a store an earlier run left behind.
+      - uses: ./.github/actions/setup
+        with:
+          cache: 'false'
+      - name: SOURCE_DATE_EPOCH from the tagged commit
+        run: echo "SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)" >> "$GITHUB_ENV"
+      # Built here and from a second checkout in another directory: the same files, byte for
+      # byte, or the release stops.
+      - name: Store build, here and from another directory
+        id: store
+        uses: ./.github/actions/reproducible-build
+        with:
+          script: build:store
+      - name: The tag names the manifest's version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          version="$(jq -r .version apps/extension/.output/chrome-mv3/manifest.json)"
+          if [ "$TAG" != "v$version" ]; then
+            echo "The tag $TAG does not name the manifest's version $version." >&2
+            exit 1
+          fi
+      # Into dist/release/, named by the tool from the brand and the manifest's version; the
+      # tool's own SHA-256 is checked against coreutils'.
+      - name: Zip
+        id: zip
+        run: |
+          pnpm release:zip | tee "$RUNNER_TEMP/zip.txt"
+          zip_file="$(awk '$1 == "zip" { print $2 }' "$RUNNER_TEMP/zip.txt")"
+          said="$(awk '$1 == "sha256" { print $2 }' "$RUNNER_TEMP/zip.txt")"
+          sha256="$(sha256sum "$zip_file" | cut -d' ' -f1)"
+          test "$said" = "$sha256"
+          mkdir -p "$RUNNER_TEMP/release"
+          cp "$zip_file" "$RUNNER_TEMP/release/"
+          {
+            echo "zip=$(basename "$zip_file")"
+            echo "sha256=$sha256"
+          } >> "$GITHUB_OUTPUT"
+      - name: The build from the other directory gives the same zip
+        env:
+          SHA256: ${{ steps.zip.outputs.sha256 }}
+          ELSEWHERE: ${{ steps.store.outputs.elsewhere }}
+        run: |
+          pnpm release:zip --dir "$ELSEWHERE" --out "$RUNNER_TEMP/again.zip"
+          echo "$SHA256  $RUNNER_TEMP/again.zip" | sha256sum --check
+      - name: Release notes
+        env:
+          TAG: ${{ github.ref_name }}
+          ZIP: ${{ steps.zip.outputs.zip }}
+          SHA256: ${{ steps.zip.outputs.sha256 }}
+          REPOSITORY: ${{ github.repository }}
+          COMMIT: ${{ github.sha }}
+        run: |
+          fingerprint="$(jq -r .fingerprint apps/extension/.output/chrome-mv3/fingerprint.json)"
+          {
+            echo "## Verify this release"
+            echo
+            echo "| | |"
+            echo "| --- | --- |"
+            echo "| Zip | \`$ZIP\` |"
+            echo "| Zip SHA-256 | \`$SHA256\` |"
+            echo "| Build fingerprint (Settings → About) | \`$fingerprint\` |"
+            echo "| Commit | \`$COMMIT\` |"
+            echo "| SOURCE_DATE_EPOCH | \`$SOURCE_DATE_EPOCH\` |"
+            echo "| Node, pnpm, zlib | \`$(node --version)\`, \`$(pnpm --version)\`, \`$(node -p 'process.versions.zlib')\` |"
+            echo "| MT_API_BASE_URL | \`$MT_API_BASE_URL\` |"
+            echo "| MT_WEB_APP_BASE_URL | \`$MT_WEB_APP_BASE_URL\` |"
+            echo
+            echo "- The zip's provenance: \`gh attestation verify $ZIP --repo $REPOSITORY --signer-workflow $REPOSITORY/.github/workflows/release.yml\`."
+            echo "- The same zip from source: check out the commit, use the Node and pnpm above,"
+            echo "  set SOURCE_DATE_EPOCH and the two URLs, then"
+            echo "  \`pnpm install --frozen-lockfile && pnpm --filter @mt/extension build:store && pnpm release:zip\`."
+            echo "- An installed copy: \`pnpm verify:install <its folder> $fingerprint --zip $ZIP\`"
+            echo "  (README.md, *Verify a build*)."
+          } > "$RUNNER_TEMP/release/notes.md"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release
+          path: ${{ runner.temp }}/release/
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Attest and publish
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # The only job with write access, an identity token (for the attestation's signature) and
+    # the attestations store. It checks nothing out and runs no repository code.
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release
+          path: release
+      - name: The zip is the one the build job hashed
+        env:
+          ZIP: ${{ needs.build.outputs.zip }}
+          SHA256: ${{ needs.build.outputs.sha256 }}
+        run: echo "$SHA256  release/$ZIP" | sha256sum --check
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: release/${{ needs.build.outputs.zip }}
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          ZIP: ${{ needs.build.outputs.zip }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          gh release create "$TAG" "release/$ZIP" \
+            --repo "$REPOSITORY" \
+            --verify-tag \
+            --title "$TAG" \
+            --notes-file release/notes.md \
+            --generate-notes

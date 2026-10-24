@@ -1,0 +1,44 @@
+# One build of the extension made twice: here, and from a second checkout of the same commit in
+# another directory, at another depth, installed from the same lockfile.
+# The two outputs must be the same files, byte for byte, with the same fingerprint — what an
+# independent builder who checked the commit out anywhere would get. A build that names the
+# directory it was built in fails here; the build itself refuses one too (build/output-check.ts).
+#
+# Leaves the first build where `pnpm size` and `pnpm release:zip` read it, and the second one at
+# the `elsewhere` output. Every action and the setup action run before it are pinned by commit.
+name: Reproducible build
+description: Build here and from another directory, and require identical output.
+
+inputs:
+  script:
+    description: The @mt/extension script that builds (`build`, `build:store` or `build:e2e`).
+    required: true
+
+outputs:
+  elsewhere:
+    description: The second build's output directory.
+    value: ${{ steps.build.outputs.elsewhere }}
+
+runs:
+  using: composite
+  steps:
+    - id: build
+      name: Build here and elsewhere, and compare
+      shell: bash
+      env:
+        SCRIPT: ${{ inputs.script }}
+      run: |
+        set -euo pipefail
+        here="$GITHUB_WORKSPACE/apps/extension/.output/chrome-mv3"
+        scratch="$RUNNER_TEMP/reproduce-${SCRIPT//:/-}"
+        checkout="$scratch/a/second/checkout"
+        rm -rf "$here" "$scratch"
+        pnpm --filter @mt/extension "$SCRIPT"
+        git worktree add --detach "$checkout" HEAD
+        # The store the first install filled: the same packages, the lockfile's integrity hashes.
+        (cd "$checkout" && pnpm install --frozen-lockfile --offline && pnpm --filter @mt/extension "$SCRIPT")
+        elsewhere="$checkout/apps/extension/.output/chrome-mv3"
+        diff -r "$here" "$elsewhere"
+        cmp "$here/fingerprint.json" "$elsewhere/fingerprint.json"
+        echo "$SCRIPT fingerprint $(jq -r .fingerprint "$here/fingerprint.json"), here and in $checkout"
+        echo "elsewhere=$elsewhere" >> "$GITHUB_OUTPUT"
