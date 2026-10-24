@@ -1,0 +1,14 @@
+{
+  // The end-to-end tests and their configuration: they run in Node (Playwright, the mock API) and
+  // drive pages (DOM types for what they evaluate there), and they read the extension's types.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/e2e"
+  },
+  "include": ["e2e", "e2e-stack", "playwright.config.ts"],
+  "references": [{ "path": "../../tools" }, { "path": "../../packages/api" }]
+}
