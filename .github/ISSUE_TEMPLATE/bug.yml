@@ -1,0 +1,48 @@
+name: Bug
+description: Something in the extension itself does not work — the popup, settings, connecting, sending.
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting it. A streaming site that stopped adding what you watch is a **Broken service** instead: that form asks for the page sample a fix needs.
+
+        A security problem is not an issue: see [SECURITY.md](../blob/main/SECURITY.md).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what the extension did or said instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again
+      description: The steps, from a fresh start if you can.
+  - type: input
+    id: build
+    attributes:
+      label: Extension version and build fingerprint
+      description: Settings → About.
+    validations:
+      required: true
+  - type: input
+    id: chrome
+    attributes:
+      label: Chrome version and system
+      description: '`chrome://version`, first line, and your operating system.'
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics log (optional)
+      description: Settings → Diagnostics, if it was on when it happened. It holds event names and ids only; read it before you attach it.
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Before you send it
+      options:
+        - label: Nothing above holds an account or profile name, an e-mail address or a token.
+          required: true

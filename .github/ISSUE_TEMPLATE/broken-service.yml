@@ -1,0 +1,55 @@
+name: Broken service
+description: A streaming site MediaTracker for Chrome knows stopped adding what you watch.
+labels: ['broken service']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting it. The fastest fix starts from a **page sample**: the snapshot of the player page that the extension reads, cleaned of anything personal. With it, someone without an account on the service can fix its module.
+
+        **Capture one:** play the film or episode that is not added, then open the extension's Settings → **Diagnostics** → **Capture page sample**, and save the sample. Read it before attaching it here: accounts, profiles, e-mail addresses, tokens and URL queries are removed, but check anyway.
+
+        A security problem is not an issue: see [SECURITY.md](../blob/main/SECURITY.md).
+  - type: input
+    id: service
+    attributes:
+      label: Service
+      description: The streaming service, and the address of the page (without anything after a `?`).
+      placeholder: Netflix — www.netflix.com/watch/…
+    validations:
+      required: true
+  - type: input
+    id: country
+    attributes:
+      label: Country
+      description: Services show different pages in different countries.
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you watched (a film, or which episode), how far, and what the extension showed — the popup's state, or what *What was sent* says.
+    validations:
+      required: true
+  - type: input
+    id: build
+    attributes:
+      label: Extension version and build fingerprint
+      description: Settings → About.
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: Page sample
+      description: Attach the `.snapshot.json` file (drag it here), or paste it between two lines of three backticks.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checked
+    attributes:
+      label: Before you send it
+      options:
+        - label: I read the sample. It holds no account or profile name, no e-mail address and no token.
+          required: true

@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/root"
+  },
+  "include": ["vitest.config.ts", "knip.config.ts"],
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/api" },
+    { "path": "packages/services" },
+    { "path": "packages/services/tsconfig.modules.json" },
+    { "path": "tools" },
+    { "path": "apps/extension/tsconfig.app.json" },
+    { "path": "apps/extension/tsconfig.node.json" },
+    { "path": "apps/extension/tsconfig.test.json" },
+    { "path": "apps/extension/tsconfig.e2e.json" }
+  ]
+}

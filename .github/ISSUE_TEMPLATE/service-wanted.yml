@@ -1,0 +1,37 @@
+name: Service wanted
+description: A streaming service that should have a module of its own.
+labels: ['service wanted']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Any film or TV site can already be tracked through the generic readers, which read what the page itself says (structured data, the media session, the page title). A **module** reads a service's own player, so it knows titles, episode numbers and the end of the credits where the generic readers cannot.
+
+        A module is written from samples captured on the real service, never blind. If you have an account, you can write it: `pnpm new:service <id>` makes the folder, the capture tool records the samples, and [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) walks through the rest.
+  - type: input
+    id: service
+    attributes:
+      label: Service
+      description: Its name and its address.
+      placeholder: Hulu — www.hulu.com
+    validations:
+      required: true
+  - type: input
+    id: countries
+    attributes:
+      label: Countries
+      description: Where the service is available, as far as you know.
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: What happens today
+      description: With the site allowed (the popup's *Track this site*), what does the extension add, and what does it miss?
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Can you help?
+      options:
+        - label: I have an account and can capture page samples on it.
+        - label: I would like to write the module (CONTRIBUTING.md, *Add a service*).

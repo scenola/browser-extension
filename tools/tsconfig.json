@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    // The tools' tests drive packages/api, whose types are the browser's (`CryptoKeyPair`).
+    "lib": ["ES2023", "DOM"],
+    "allowJs": true,
+    "checkJs": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "../dist/tools"
+  },
+  "include": ["./**/*.ts", "./**/*.js"],
+  // The i18n compiler fills in the brand's names from the app (apps/extension/src/brand.ts);
+  // the tools that read the service registry load it from source (tools/docs/load-services.ts).
+  "references": [
+    { "path": "../packages/core" },
+    { "path": "../packages/api" },
+    { "path": "../packages/services" },
+    { "path": "../apps/extension/tsconfig.app.json" }
+  ]
+}

@@ -1,0 +1,21 @@
+# Dependencies and build output
+node_modules/
+.output/
+.wxt/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Local configuration — staging and production values never live in the repo
+.env
+.env.*
+!.env.example
+
+# Test and tool output
+test-results/
+playwright-report/
+
+# Editors and systems
+.DS_Store
+.idea/
+.vscode/

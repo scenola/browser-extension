@@ -1,0 +1,11 @@
+pnpm-lock.yaml
+LICENSE
+dist/
+.output/
+.wxt/
+coverage/
+# Generated, and compared byte for byte by `pnpm openapi:check`: formatting them would break it.
+tools/openapi/openapi.subset.json
+packages/api/src/generated/
+# Generated, and compared byte for byte by `pnpm i18n:check`.
+apps/extension/src/i18n/generated/

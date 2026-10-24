@@ -1,0 +1,28 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Supply chain: nothing published in the last 7 days is installed,
+# a version may not be older in trust than the one before it, and a transitive
+# dependency may not come from a git URL or a tarball.
+#
+# A security fix younger than that waits too, unless its advisory cannot: then its exact version
+# (never a range or a bare name) is listed under `minimumReleaseAgeExclude`, with the advisory's
+# id as its reason, and taken out once the version is 7 days old. `pnpm audit --fix` writes such
+# an entry; read it before keeping it.
+minimumReleaseAge: 10080
+trustPolicy: no-downgrade
+blockExoticSubdeps: true
+
+# A dependency's install script runs only when it is listed here, with a reason.
+# Nothing needs one yet.
+strictDepBuilds: true
+allowBuilds: {}
+
+# A peer range a package declares, accepted for the exact version installed, with a reason.
+peerDependencyRules:
+  allowedVersions:
+    # openapi-typescript 7 declares `typescript: ^5.x`; it uses only the compiler's AST
+    # factory and printer, which TypeScript 6.0 keeps. `pnpm openapi:check` runs it on every
+    # check; a TypeScript bump brings the warning back, to be checked again.
+    openapi-typescript>typescript: 6.0.3

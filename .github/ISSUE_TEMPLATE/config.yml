@@ -1,0 +1,5 @@
+# Every issue starts from a form, so it arrives with what a fix needs. A security problem is not
+# an issue: SECURITY.md sends it to GitHub's private vulnerability reporting, and GitHub itself
+# offers "Report a vulnerability" beside these forms once that is turned on in the repository's
+# settings, so no contact link is needed here.
+blank_issues_enabled: false

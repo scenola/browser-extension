@@ -1,0 +1,94 @@
+# The gates of every pull request, also run by the release workflow before it
+# builds a release. No secrets, read-only token, every action pinned by commit.
+#
+# The end-to-end suite (`pnpm e2e`, apps/extension/e2e) is not one of them: it drives Chromium
+# through every scenario one at a time, for half an hour, so it runs on a contributor's machine
+# before a change outside a module (CONTRIBUTING.md, *The checks*).
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  # Its own prefix: a release that calls this workflow must not share its group with it.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    name: Lint, types, tests, generated files
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          # The module-version check diffs the pull request against its merge base.
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      # ESLint (with the MPL notice and the modules' guard rails), Prettier, the dependency
+      # rules (dependency-cruiser) and unused code (knip): one script, so CI and a laptop agree.
+      - name: Lint, format, dependency rules, unused code
+        run: pnpm lint
+      - name: Types
+        run: pnpm typecheck
+      # Unit, fixture, integration, registry and gate tests: Vitest, every package.
+      - name: Tests
+        run: pnpm test
+      # Without the sibling backend checkout (always, here) the subset is not compared with the
+      # backend's document; the types are still regenerated from the committed subset.
+      - name: The OpenAPI subset and its generated types
+        run: pnpm openapi:check
+      - name: Translations
+        run: pnpm i18n:check
+      # Every colour pair the pages paint, against WCAG 2.2 AA in both themes;
+      # a token class no pair measures fails it too.
+      - name: Contrast
+        run: pnpm contrast:check
+      - name: docs/services.md follows the registry
+        run: pnpm docs:services --check
+      - name: A module's version moves with its fixtures
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: pnpm module-versions:check --against "origin/$BASE_REF"
+
+  build:
+    name: Reproducible builds, size budgets, release zip
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      # The build's day decides which modules a store build ships (90 days): the
+      # commit's time, not the clock's, so two builds a midnight apart cannot differ.
+      - name: SOURCE_DATE_EPOCH from the commit
+        run: echo "SOURCE_DATE_EPOCH=$(git log -1 --format=%ct)" >> "$GITHUB_ENV"
+      # What ships: built here and from a second checkout elsewhere, the same bytes.
+      # A store build refuses a local URL; these stand in for the production origins, which only
+      # the release workflow is given.
+      - name: The store build, here and from another directory
+        uses: ./.github/actions/reproducible-build
+        env:
+          MT_API_BASE_URL: https://api.example.com
+          MT_WEB_APP_BASE_URL: https://app.example.com
+        with:
+          script: build:store
+      - name: Size budgets of the store build
+        run: pnpm size
+      - name: The release zip of the store build, read back
+        run: pnpm release:zip --out "$RUNNER_TEMP/extension.zip"
+      # What a contributor loads (`pnpm build`): the same build rules, the pseudo-locale in. The
+      # size budgets are for what ships, so they were measured on the store build above.
+      - name: The development build, here and from another directory
+        uses: ./.github/actions/reproducible-build
+        with:
+          script: build

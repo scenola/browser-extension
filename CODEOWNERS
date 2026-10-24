@@ -1,0 +1,52 @@
+# Who reviews what. GitHub applies the LAST pattern that matches a path, so the
+# maintainer-only paths come last: a broader rule added above can never take them away.
+
+# Everything, by default.
+*                                               @artemkozak
+
+# Service modules (every module change is reviewed). A service's maintainer is added
+# beside the project maintainer on that service's folder, one line each, BELOW the next line, for example:
+#   /packages/services/src/services/<id>/       @artemkozak @<maintainer>
+/packages/services/src/services/                @artemkozak
+
+# Project maintainer only: the core, the protocol, what a module may do, and the security-relevant parts of
+# the extension, its build and its release.
+/packages/core/                                 @artemkozak
+/packages/api/                                  @artemkozak
+/packages/services/src/sdk.ts                   @artemkozak
+/packages/services/src/route-safety.ts          @artemkozak
+/packages/services/src/registry.ts              @artemkozak
+/packages/services/src/helpers.ts               @artemkozak
+/packages/services/eslint.modules.js            @artemkozak
+/packages/services/tsconfig.modules.json        @artemkozak
+/apps/extension/src/collector/                  @artemkozak
+/apps/extension/src/composition/                @artemkozak
+/apps/extension/src/entrypoints/                @artemkozak
+/apps/extension/src/messaging/                  @artemkozak
+/apps/extension/src/platform/                   @artemkozak
+/apps/extension/src/config.ts                   @artemkozak
+/apps/extension/src/config-rules.ts             @artemkozak
+/apps/extension/src/sites.ts                    @artemkozak
+/apps/extension/build/                          @artemkozak
+/apps/extension/wxt.config.ts                   @artemkozak
+/apps/extension/dev-key.pub                     @artemkozak
+/apps/extension/package.json                    @artemkozak
+/apps/extension/tsconfig*.json                  @artemkozak
+/apps/extension/vitest.config.ts                @artemkozak
+/.github/                                       @artemkozak
+/tools/                                         @artemkozak
+/package.json                                   @artemkozak
+/pnpm-lock.yaml                                 @artemkozak
+/pnpm-workspace.yaml                            @artemkozak
+/.npmrc                                         @artemkozak
+/.nvmrc                                         @artemkozak
+/.dependency-cruiser.cjs                        @artemkozak
+/eslint.config.js                               @artemkozak
+/knip.config.ts                                 @artemkozak
+/.prettierrc.json                               @artemkozak
+/.prettierignore                                @artemkozak
+/tsconfig.json                                  @artemkozak
+/tsconfig.base.json                             @artemkozak
+/vitest.config.ts                               @artemkozak
+/CODEOWNERS                                     @artemkozak
+/SECURITY.md                                    @artemkozak

@@ -1,0 +1,47 @@
+# Updates to the exact pins, as pull requests the gates then judge. The cooldown matches
+# `minimumReleaseAge` in pnpm-workspace.yaml: nothing younger than seven days is proposed, so a
+# version pulled within its first week never reaches a pull request. Security updates skip this
+# cooldown, but not pnpm's: a fix younger than seven days does not install until it is old enough
+# or its exact version is let in by hand (pnpm-workspace.yaml says how). Each pull request is
+# reviewed like any other: a dependency's new install script still needs its reasoned entry in
+# pnpm-workspace.yaml.
+version: 2
+updates:
+  # pnpm: the workspace's one lockfile at the root covers every package.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: build
+      include: scope
+    groups:
+      # The tools move together; a runtime dependency (preact, valibot, idb, signals) gets a
+      # pull request of its own, since it ships.
+      tools:
+        applies-to: version-updates
+        dependency-type: development
+        update-types: [minor, patch]
+        patterns: ['*']
+
+  # The workflows' and the composite actions' pins, each a commit SHA.
+  - package-ecosystem: github-actions
+    directories:
+      - /
+      - /.github/actions/*
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      actions:
+        patterns: ['*']

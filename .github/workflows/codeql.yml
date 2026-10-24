@@ -1,0 +1,55 @@
+# CodeQL: GitHub's static analysis, over the TypeScript (injection, unsafe URL handling, prototype
+# pollution, regular expressions that backtrack) and over these workflows themselves (untrusted
+# input in a `run:` line, an over-broad token). Findings go to the repository's Security tab and
+# annotate the pull request. Nothing is built: both languages are read from source.
+# Read-only checkout, every action pinned by commit.
+name: CodeQL
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  # Weekly as well, so a query added to CodeQL reaches code that has not changed.
+  schedule:
+    - cron: '17 4 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    # Uploading results is the one write. A public repository's run metadata is readable
+    # without `actions: read`.
+    permissions:
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, actions]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+          queries: security-extended
+          # Generated code is checked against its source by its own gate; the guard rails'
+          # specimens are wrong on purpose.
+          config: |
+            paths-ignore:
+              - packages/api/src/generated
+              - apps/extension/src/i18n/generated
+              - packages/services/test/forbidden
+      - uses: github/codeql-action/analyze@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          category: /language:${{ matrix.language }}

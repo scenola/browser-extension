@@ -1,0 +1,32 @@
+# The toolchain every job needs, in one place: pnpm from `packageManager` (12.6.0), Node from
+# `.nvmrc`, and an install that refuses a lockfile out of step with package.json. Every action is
+# pinned by commit; the tag beside each SHA was resolved with `git ls-remote`.
+name: Set up the toolchain
+description: pnpm from packageManager, Node from .nvmrc, and a frozen install.
+
+inputs:
+  cache:
+    description: Restore and save the pnpm store between runs ("true" or "false").
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    # v6.1 is the first release that installs pnpm 12. No `version` input: it reads
+    # `packageManager` from package.json, so there is one pin.
+    - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version-file: .nvmrc
+        cache: ${{ inputs.cache == 'true' && 'pnpm' || '' }}
+        package-manager-cache: false
+    - name: Versions
+      shell: bash
+      run: |
+        node --version
+        pnpm --version
+        node -p 'process.versions.zlib'
+    # The supply-chain settings in pnpm-workspace.yaml apply here as everywhere.
+    - name: Install
+      shell: bash
+      run: pnpm install --frozen-lockfile
