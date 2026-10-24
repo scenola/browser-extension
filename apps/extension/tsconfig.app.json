@@ -1,0 +1,20 @@
+{
+  // What ships: the worker, the content scripts and the pages. Browser globals only — the
+  // extension APIs come from `wxt/browser`, typed, never from a global.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    // The pages are Preact: JSX compiles to its automatic runtime.
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/app"
+  },
+  "include": ["src"],
+  "references": [
+    { "path": "../../packages/core" },
+    { "path": "../../packages/api" },
+    { "path": "../../packages/services" }
+  ]
+}

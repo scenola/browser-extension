@@ -1,0 +1,18 @@
+{
+  // The build: wxt.config.ts and build/, which run in Node at build time, and the size budgets'
+  // configuration (.size-limit.ts), which measures what it wrote.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["ES2023", "DOM"],
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/node"
+  },
+  "include": ["wxt.config.ts", "build", ".size-limit.ts"],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "../../tools" },
+    { "path": "../../packages/services" }
+  ]
+}

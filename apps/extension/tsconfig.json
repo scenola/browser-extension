@@ -1,0 +1,13 @@
+{
+  // Two programs: the extension itself (browser globals, no Node) and its build (Node, no DOM
+  // beyond what the tools' types need). Neither sees the other's globals. A third, the tests
+  // outside src/, sees both: they drive the build and the extension's code. A fourth, the
+  // end-to-end tests (e2e/), runs in Node and drives Chromium.
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.test.json" },
+    { "path": "./tsconfig.e2e.json" }
+  ]
+}

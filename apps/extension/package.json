@@ -1,0 +1,40 @@
+{
+  "name": "@mt/extension",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run --root ../.. --configLoader runner --project extension",
+    "dev": "wxt --mode development",
+    "build": "wxt build --mode development",
+    "build:e2e": "wxt build --mode e2e",
+    "build:store": "wxt build --mode store",
+    "e2e": "playwright test",
+    "size": "size-limit"
+  },
+  "dependencies": {
+    "@mt/api": "workspace:*",
+    "@mt/core": "workspace:*",
+    "@mt/services": "workspace:*",
+    "@preact/signals": "2.11.3",
+    "idb": "8.0.4",
+    "preact": "11.0.1",
+    "valibot": "1.5.0"
+  },
+  "devDependencies": {
+    "@fontsource-variable/bricolage-grotesque": "5.3.0",
+    "@fontsource-variable/instrument-sans": "5.3.0",
+    "@playwright/test": "1.63.0",
+    "@size-limit/file": "14.2.0",
+    "@tailwindcss/postcss": "4.3.3",
+    "@testing-library/preact": "3.2.4",
+    "axe-core": "4.14.0",
+    "fake-indexeddb": "6.2.5",
+    "fast-check": "4.10.2",
+    "happy-dom": "21.0.1",
+    "size-limit": "14.2.0",
+    "tailwindcss": "4.3.3",
+    "vite": "8.3.4",
+    "wxt": "0.21.4"
+  }
+}

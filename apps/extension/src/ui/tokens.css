@@ -1,0 +1,78 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+/*
+ * The web app's Projection tokens, copied once from the web app on 2026-10-17: its light and
+ * dark values, the subset the
+ * extension's pages use, and the motion numbers. Dark is primary; light follows
+ * `prefers-color-scheme`. The ink (`--primary`) is the one action colour; the lamp is spent on
+ * signals only — never a button, never a heading. A change here is a change copied from there.
+ *
+ * The toolbar badge cannot read CSS: its two colours are these tokens in sRGB, in
+ * src/platform/status-display.ts.
+ */
+
+:root {
+  color-scheme: dark light;
+
+  /* dark — the room */
+  --background: oklch(0.13 0.005 70);
+  --foreground: oklch(0.97 0.003 80);
+  --card: oklch(0.19 0.006 70);
+  --card-foreground: oklch(0.97 0.003 80);
+  --primary: oklch(0.97 0.003 80);
+  --primary-foreground: oklch(0.16 0.005 70);
+  --secondary: oklch(0.24 0.007 70);
+  --secondary-foreground: oklch(0.93 0.004 80);
+  --accent: oklch(0.27 0.008 70);
+  --muted-foreground: oklch(0.71 0.008 75);
+  --destructive: oklch(0.66 0.19 25);
+  --destructive-foreground: oklch(0.97 0.01 26);
+  --success: oklch(0.7 0.13 155);
+  --border: oklch(0.25 0.006 70);
+  --input: oklch(0.29 0.007 70);
+  --ring: oklch(0.97 0.003 80);
+  --lamp: oklch(0.84 0.11 82);
+  /* The extension's own: "recording", the toolbar mark's green (#4fd57f); the
+     lamp stays "waiting". Not in the web app. assets/icons/mark-recording.svg spells it. */
+  --go: oklch(0.78 0.17 152);
+
+  /* The matte glass of the control layer: how much of the ground it keeps. */
+  --glass-alpha: 80%;
+  --glass-highlight: oklch(1 0 0 / 0.09);
+  --glass-shadow: oklch(0 0 0 / 0.3);
+
+  /* Motion: one easing, a state's change and an opening. */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-state: 120ms;
+  --t-open: 220ms;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    /* light — warm paper */
+    --background: oklch(0.975 0.006 85);
+    --foreground: oklch(0.2 0.01 70);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.2 0.01 70);
+    --primary: oklch(0.2 0.01 70);
+    --primary-foreground: oklch(0.975 0.006 85);
+    --secondary: oklch(0.94 0.008 85);
+    --secondary-foreground: oklch(0.28 0.01 70);
+    --accent: oklch(0.92 0.008 85);
+    --muted-foreground: oklch(0.47 0.012 70);
+    --destructive: oklch(0.55 0.2 26);
+    --destructive-foreground: oklch(0.99 0.005 85);
+    --success: oklch(0.52 0.13 155);
+    --border: oklch(0.89 0.008 85);
+    --input: oklch(0.87 0.008 85);
+    --ring: oklch(0.2 0.01 70);
+    --lamp: oklch(0.47 0.11 72);
+    --go: oklch(0.5 0.13 152);
+
+    --glass-alpha: 82%;
+    --glass-highlight: oklch(1 0 0 / 0.7);
+    --glass-shadow: oklch(0.3 0.02 70 / 0.1);
+  }
+}

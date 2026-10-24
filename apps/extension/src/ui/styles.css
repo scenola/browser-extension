@@ -1,0 +1,135 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+/*
+ * The pages' one stylesheet: Tailwind 4, compiled at build time, over the Projection
+ * tokens. Components use semantic utilities (`bg-background`, `text-muted-foreground`,
+ * `bg-primary`), never a raw colour, so the light theme and a token change reach every page.
+ * Only the extension's own sources are scanned for class names.
+ */
+
+/* Every `@import` before any other rule, or the browser drops the later ones. */
+@import 'tailwindcss' source(none);
+@import './tokens.css';
+@source '../';
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-lamp: var(--lamp);
+
+  --font-sans: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', 'Instrument Sans Variable', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', 'Roboto Mono', monospace;
+
+  /* The web app's scale (its globals.css `@theme`): micro is the floor. */
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.125rem;
+  --text-body-s: 0.875rem;
+  --text-body-s--line-height: 1.25rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+  --text-display-s: 1.0625rem;
+  --text-display-s--line-height: 1.375rem;
+  --text-display-m: 1.25rem;
+  --text-display-m--line-height: 1.625rem;
+  --text-display-l: 1.75rem;
+  --text-display-l--line-height: 2.125rem;
+
+  --transition-duration-state: var(--t-state);
+  --transition-duration-open: var(--t-open);
+  --ease-app: var(--ease);
+}
+
+/*
+ * Unlayered, and one step more specific than `body`: Chrome adds its own stylesheet to every
+ * extension page (a platform font at 75 %), and a layered rule loses to it whatever its
+ * specificity.
+ */
+html {
+  background-color: var(--background);
+}
+
+html body {
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  /* The ring is the ink, on every control, only for the keyboard. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0ms !important;
+      animation-duration: 0ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* The control layer's material: the room under a blur, with opaque fallbacks. */
+@utility glass {
+  background-color: color-mix(in oklab, var(--background) var(--glass-alpha), transparent);
+  backdrop-filter: blur(24px) saturate(1.1);
+  box-shadow:
+    inset 0 -1px 0 var(--border),
+    0 8px 24px var(--glass-shadow);
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--card);
+    backdrop-filter: none;
+  }
+  @media (prefers-contrast: more) {
+    background-color: var(--card);
+    backdrop-filter: none;
+  }
+}
+
+/* The progress of what is playing: the ink on a hairline track, nothing else. */
+@utility beam {
+  appearance: none;
+  display: block;
+  inline-size: 100%;
+  block-size: 4px;
+  border: 0;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: var(--border);
+  &::-webkit-progress-bar {
+    background-color: var(--border);
+    border-radius: 9999px;
+  }
+  &::-webkit-progress-value {
+    background-color: var(--primary);
+    border-radius: 9999px;
+    transition: inline-size var(--t-open) var(--ease);
+  }
+}

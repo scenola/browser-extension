@@ -1,0 +1,19 @@
+{
+  // The tests outside src/ and the test configuration: they drive the build (Node) and the
+  // extension's code under a fake browser (DOM), so they see both programs' globals.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/test"
+  },
+  "include": ["test", "vitest.config.ts"],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" },
+    { "path": "../../tools" },
+    { "path": "../../packages/services" }
+  ]
+}
