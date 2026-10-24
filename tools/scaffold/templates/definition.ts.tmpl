@@ -1,0 +1,37 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+// The {{nameComment}} module. What it reads, and why, is in README.md beside it.
+//
+// Written from captured samples, never blind: capture a page sample on the service
+// (CONTRIBUTING.md, "Capture a page sample"), then declare what the module reads in `collect`
+// and turn the snapshot into a reading in `interpret`. `interpret` runs in a sandbox with no
+// network and no page: it sees only the snapshot.
+
+import { defineService, matchPlayerRoute } from '../../sdk';
+import type { ServiceReading, Snapshot } from '../../sdk';
+
+/** Where the player lives: the `url.pathname` of a captured sample, as a pattern. */
+const PLAYER_ROUTES: readonly RegExp[] = [/^\/watch\/([^/]{1,128})/u];
+
+export const {{exportName}} = defineService({
+  id: {{idTs}},
+  name: {{nameTs}},
+  // Bump it whenever a fixture or this file changes: CI checks (pnpm module-versions:check).
+  version: '0.1.0',
+  // {{hostsComment}}
+  hosts: {{hostsTs}},
+  // Set after a run against the real service, with its samples captured.
+  verified: null,
+  playerRoutes: PLAYER_ROUTES,
+  // What the collector gathers for `interpret`: selectors, JSON-LD, Media Session, Open Graph,
+  // query parameters, the player's own state, end-of-content and ad signals (CollectSpec in
+  // ../../sdk.ts). Ask for what the module reads, and nothing else.
+  collect: {},
+  interpret(snapshot: Snapshot): ServiceReading | null {
+    if (matchPlayerRoute(PLAYER_ROUTES, snapshot.url.pathname) === null) return null;
+    // Nothing is read yet: `null` leaves the page to the generic readers.
+    return null;
+  },
+});

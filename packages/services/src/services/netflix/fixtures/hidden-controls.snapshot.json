@@ -1,0 +1,48 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": {
+      "hostname": "www.netflix.com",
+      "pathname": "/watch/70196253",
+      "query": {},
+      "hash": ""
+    },
+    "lang": "en",
+    "documentTitle": "Netflix",
+    "selectors": {
+      "titleHeading": [],
+      "titleParts": [],
+      "playerVideoId": ["70196253"]
+    },
+    "jsonLd": [],
+    "mediaSession": null,
+    "openGraph": {},
+    "pageState": {
+      "playback": {
+        "c0ffee03": {
+          "videoId": 70196253,
+          "duration": 2880000,
+          "currentTime": 612000,
+          "paused": false,
+          "playing": true
+        }
+      },
+      "falcor": {
+        "summary": {
+          "$type": "atom",
+          "value": {
+            "type": "episode",
+            "id": 70196253,
+            "idx": 2,
+            "episode": 2,
+            "season": 1,
+            "isPlayable": true
+          }
+        },
+        "runtime": { "$type": "atom", "value": 2880 },
+        "creditsOffset": { "$type": "atom", "value": 2790 }
+      }
+    },
+    "signals": { "endOfContent": false, "adPlaying": false }
+  }
+}

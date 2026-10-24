@@ -1,0 +1,19 @@
+{
+  // The modules' compiler guard rail: everything this package ships — the SDK,
+  // the helpers, the registry and every module under src/services/ — compiles with the
+  // ES2023 library alone and no ambient types, so `document`, `window`, `fetch`, `chrome`
+  // and Node's globals do not exist. A shipped file that imports a test, or anything outside
+  // this list, is an error (TS6307). `lib` and `types` are stated here, not inherited, so a
+  // change to tsconfig.base.json cannot widen them; src/guard-rails.test.ts pins both.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "types": [],
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist/modules"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"],
+  "references": [{ "path": "../core" }]
+}

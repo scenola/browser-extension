@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": { "hostname": "tv.apple.com", "pathname": "/us", "query": {}, "hash": "" },
+    "lang": "en",
+    "documentTitle": "Apple TV",
+    "selectors": {},
+    "jsonLd": [],
+    "mediaSession": null,
+    "openGraph": {},
+    "pageState": {},
+    "signals": { "endOfContent": false, "adPlaying": false }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": {
+      "hostname": "www.netflix.com",
+      "pathname": "/watch/80000003",
+      "query": {},
+      "hash": ""
+    },
+    "lang": "uk",
+    "documentTitle": "Netflix",
+    "selectors": {
+      "titleHeading": ["Джентльмени"],
+      "titleParts": ["Еп. 3", "Де моя трава?"],
+      "playerVideoId": ["80000003"]
+    },
+    "jsonLd": [],
+    "mediaSession": null,
+    "openGraph": {},
+    "pageState": {},
+    "signals": { "endOfContent": false, "adPlaying": false }
+  }
+}

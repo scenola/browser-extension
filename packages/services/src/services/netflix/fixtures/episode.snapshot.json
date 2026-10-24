@@ -1,0 +1,50 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": {
+      "hostname": "www.netflix.com",
+      "pathname": "/watch/70196253",
+      "query": {},
+      "hash": ""
+    },
+    "lang": "en",
+    "documentTitle": "Netflix",
+    "selectors": {
+      "titleHeading": ["Breaking Bad"],
+      "titleParts": ["S1:E2", "Cat's in the Bag..."],
+      "playerVideoId": ["70196253"]
+    },
+    "jsonLd": [],
+    "mediaSession": null,
+    "openGraph": {},
+    "pageState": {
+      "playback": {
+        "c0ffee01": {
+          "videoId": 70196253,
+          "duration": 2880000,
+          "currentTime": 612000,
+          "paused": false,
+          "playing": true
+        }
+      },
+      "video": {
+        "type": "show",
+        "id": 70143836,
+        "title": "Breaking Bad",
+        "year": 2008,
+        "currentEpisode": 70196253,
+        "hiddenEpisodeNumbers": false
+      },
+      "episode": { "id": 70196253, "title": "Cat's in the Bag..." },
+      "falcor": {
+        "summary": {
+          "$type": "atom",
+          "value": { "type": "episode", "id": 70196253, "episode": 2, "season": 1 }
+        },
+        "runtime": { "$type": "atom", "value": 2880 },
+        "creditsOffset": { "$type": "atom", "value": 2790 }
+      }
+    },
+    "signals": { "endOfContent": false, "adPlaying": false }
+  }
+}

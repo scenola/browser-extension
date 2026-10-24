@@ -1,0 +1,36 @@
+# {{nameMd}}
+
+The module for {{hostsMd}} (id `{{id}}`, permanent: it is the `provider.{{id}}` namespace the
+server remembers answers under). **Unverified** — `verified: null` until it has run against the
+real service and its samples were captured from that run (below), so a store build does not ship
+it.
+
+**Maintainer:** _the person who captured its samples and answers its issues — a name or a GitHub
+handle._
+
+## What it reads, and why
+
+_One line for each entry of `collect`, and for each part of the URL `interpret` reads: what it is
+on the page and why the module needs it. Nothing the module does not read._
+
+## What `interpret` answers
+
+_For each kind of page — not a player route, an episode, a film, the end of the content — the
+reading it returns and the confidence of each field._
+
+## Known gaps
+
+_What the module cannot tell yet, and what a viewing looks like then._
+
+## Verify it
+
+1. Load a development build in Chrome (CONTRIBUTING.md, _Capture a page sample_).
+2. Play each page below in its tab, then use Settings → **Diagnostics** → **Capture page
+   sample**: an episode, a film, the end of an episode (the credits or the next-episode screen)
+   and a page that is not the player while a preview plays on it.
+3. Read each sample before keeping it: no profile, account, e-mail, token or URL query may be in
+   it. The tool removes them; check anyway.
+4. Save the samples under `fixtures/` with the names `definition.test.ts` asks for and
+   `"synthetic": false`, and write the readings you expect into the test.
+5. Bump `version`, and set `verified: { on: "<YYYY-MM-DD>", by: "<who>" }`. A store build drops
+   the module again 90 days later unless it is verified anew.

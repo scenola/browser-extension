@@ -1,0 +1,35 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": {
+      "hostname": "tv.apple.com",
+      "pathname": "/us/episode/half-loop/umc.cmc.synthep0102",
+      "query": { "showId": "umc.cmc.synthshow01" },
+      "hash": ""
+    },
+    "lang": "en-US",
+    "documentTitle": "Half Loop - Severance - Apple TV",
+    "selectors": {
+      "player": ["video-player"],
+      "playerTitle": ["Severance"],
+      "playerSubtitle": ["S1, E3 · In Perpetuity"],
+      "contentId": ["umc.cmc.synthep0102"]
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@type": "TVEpisode",
+        "url": "https://tv.apple.com/us/episode/in-perpetuity/umc.cmc.synthep0103",
+        "name": "In Perpetuity",
+        "episodeNumber": 3,
+        "partOfSeason": { "@type": "TVSeason", "seasonNumber": 1 },
+        "partOfSeries": { "@type": "TVSeries", "name": "Severance" },
+        "sameAs": "https://www.imdb.com/title/tt90000103/"
+      }
+    ],
+    "mediaSession": { "title": "In Perpetuity", "artist": "Severance" },
+    "openGraph": { "og:type": "video.episode", "og:title": "Half Loop" },
+    "pageState": {},
+    "signals": { "endOfContent": true, "adPlaying": false }
+  }
+}

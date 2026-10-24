@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": { "hostname": "www.netflix.com", "pathname": "/browse", "query": {}, "hash": "" },
+    "lang": "en",
+    "documentTitle": "Home - Netflix",
+    "selectors": {},
+    "jsonLd": [],
+    "mediaSession": null,
+    "openGraph": {},
+    "pageState": {},
+    "signals": { "endOfContent": false, "adPlaying": false }
+  }
+}

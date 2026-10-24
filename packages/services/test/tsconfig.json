@@ -1,0 +1,16 @@
+{
+  // The guard rails' specimens (forbidden/) and their control (control/), compiled with the
+  // modules' own options. Deliberately not referenced by the root tsconfig: the forbidden
+  // files must fail to compile, and src/guard-rails.test.ts is what compiles them. ESLint's
+  // project service finds this file for them.
+  "extends": "../tsconfig.modules.json",
+  "compilerOptions": {
+    "composite": false,
+    // The control imports the SDK from ../src.
+    "rootDir": "..",
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "noEmit": true
+  },
+  "include": ["forbidden/*.ts", "control/*.ts"]
+}

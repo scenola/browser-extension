@@ -1,0 +1,34 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": {
+      "hostname": "tv.apple.com",
+      "pathname": "/us/movie/coda/umc.cmc.synthfilm01",
+      "query": {},
+      "hash": ""
+    },
+    "lang": "en-US",
+    "documentTitle": "CODA - Apple TV",
+    "selectors": {
+      "player": ["video-player"],
+      "playerTitle": ["CODA"],
+      "contentId": ["umc.cmc.synthfilm01"]
+    },
+    "jsonLd": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Movie",
+        "@id": "https://tv.apple.com/us/movie/coda/umc.cmc.synthfilm01",
+        "url": "https://tv.apple.com/us/movie/coda/umc.cmc.synthfilm01",
+        "name": "CODA",
+        "datePublished": "2021-08-13",
+        "duration": "PT1H51M",
+        "sameAs": "https://www.imdb.com/title/tt10366460/"
+      }
+    ],
+    "mediaSession": { "title": "CODA" },
+    "openGraph": { "og:type": "video.movie", "og:title": "CODA" },
+    "pageState": {},
+    "signals": { "endOfContent": false, "adPlaying": false }
+  }
+}

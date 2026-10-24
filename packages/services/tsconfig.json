@@ -1,0 +1,16 @@
+{
+  // The whole package, tests included. The tests run in Node, so they see Node's types; the
+  // code that ships is compiled a second time, without them, by tsconfig.modules.json.
+  // `resolveJsonModule` is for the module tests, which load their fixtures as JSON imports;
+  // tsconfig.modules.json does not set it, so a shipped file still cannot import JSON.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "resolveJsonModule": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist"
+  },
+  "include": ["src", "src/**/*.snapshot.json"],
+  "references": [{ "path": "../core" }]
+}

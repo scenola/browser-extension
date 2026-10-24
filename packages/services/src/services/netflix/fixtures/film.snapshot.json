@@ -1,0 +1,44 @@
+{
+  "synthetic": true,
+  "snapshot": {
+    "url": {
+      "hostname": "www.netflix.com",
+      "pathname": "/watch/80175798",
+      "query": {},
+      "hash": ""
+    },
+    "lang": "en",
+    "documentTitle": "Netflix",
+    "selectors": {
+      "titleHeading": ["The Irishman"],
+      "titleParts": [],
+      "playerVideoId": ["80175798"]
+    },
+    "jsonLd": [],
+    "mediaSession": null,
+    "openGraph": {},
+    "pageState": {
+      "playback": {
+        "c0ffee02": {
+          "videoId": 80175798,
+          "duration": 12540000,
+          "currentTime": 30000,
+          "paused": false,
+          "playing": true
+        }
+      },
+      "video": {
+        "type": "movie",
+        "id": 80175798,
+        "title": "The Irishman",
+        "year": 2019,
+        "hiddenEpisodeNumbers": false
+      },
+      "falcor": {
+        "summary": { "$type": "atom", "value": { "type": "movie", "id": 80175798 } },
+        "runtime": { "$type": "atom", "value": 12540 }
+      }
+    },
+    "signals": { "endOfContent": false, "adPlaying": false }
+  }
+}

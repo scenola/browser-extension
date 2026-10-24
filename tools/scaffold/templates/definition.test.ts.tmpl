@@ -1,0 +1,59 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
+
+// The {{nameComment}} module against its samples (a fixture is a snapshot, and a
+// module's test is `interpret(fixture)` → the reading the page shows). Each sample below fails
+// until it is captured: capture it (CONTRIBUTING.md, "Capture a page sample"), read it, save it
+// under fixtures/ with `"synthetic": false`, and replace the failure with the reading you expect.
+//
+// Fixtures load as JSON imports, as the other modules' tests do: each captured sample gets an
+// `import … from './fixtures/<name>.snapshot.json'` line beside the empty one below, and the
+// registry test refuses a fixture whose file this test never names.
+
+import { describe, expect, it } from 'vitest';
+
+import type { Snapshot } from '../../sdk';
+import { {{exportName}} } from './definition';
+import emptyFixture from './fixtures/empty.snapshot.json';
+
+const snapshotOf = (fixture: { readonly snapshot: unknown }): Snapshot =>
+  fixture.snapshot as Snapshot;
+
+/** The scaffold's own sample: a page with nothing on it, which a module reads as nothing. */
+const EMPTY = snapshotOf(emptyFixture);
+
+/** The samples a module is verified on (at least one per kind it reads). */
+const SAMPLES = [
+  {
+    file: 'episode.snapshot.json',
+    page: 'an episode playing, with the show, the season and the episode on screen',
+  },
+  { file: 'film.snapshot.json', page: 'a film playing' },
+  {
+    file: 'end.snapshot.json',
+    page: 'the end of an episode or a film: the credits, or the next-episode screen',
+  },
+  {
+    file: 'browse.snapshot.json',
+    page: 'a page that is not the player while a preview plays on it (the home page, say)',
+  },
+] as const;
+
+describe({{idTs}}, () => {
+  it('is the module of its id', () => {
+    expect({{exportName}}.id).toBe({{idTs}});
+  });
+
+  it('reads nothing from the empty sample', () => {
+    expect({{exportName}}.interpret(EMPTY)).toBeNull();
+  });
+
+  for (const sample of SAMPLES) {
+    it(`reads fixtures/${sample.file}`, () => {
+      expect.fail(
+        `Capture ${sample.page} and save it as fixtures/${sample.file}; then assert its reading here.`,
+      );
+    });
+  }
+});
