@@ -221,3 +221,8 @@ in your browser unless you attach them to a report yourself.
 
 Anything new the extension keeps or sends will be listed here, on the settings
 page's _About_, and in the store listing, in the same release.
+
+## Questions
+
+Write to [privacy@scenola.com](mailto:privacy@scenola.com) about anything on
+this page or anything the extension keeps or sends.

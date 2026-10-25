@@ -86,7 +86,7 @@ About shows the fingerprint of the copy you run.
 1. **Where the zip came from.** Each zip carries a build-provenance attestation made by the
    release workflow. With the [GitHub CLI](https://cli.github.com/), run the command the
    release's notes give:
-   `gh attestation verify <zip> --repo <owner>/<repository> --signer-workflow <owner>/<repository>/.github/workflows/release.yml`.
+   `gh attestation verify <zip> --repo scenola/browser-extension --signer-workflow scenola/browser-extension/.github/workflows/release.yml`.
    It checks that this repository's release workflow made the zip, not merely someone's
    workflow somewhere.
 2. **That the zip is this source.** Builds are reproducible: check out the release's commit,
