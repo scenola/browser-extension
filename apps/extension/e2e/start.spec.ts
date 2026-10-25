@@ -75,7 +75,7 @@ async function openCounting(
     await expect(counting.getByText(text, { exact: true })).toBeVisible({ timeout: 20_000 });
   }
   await backInTime();
-  await expect(counting.getByRole('link', { name: 'Change in MediaTracker' })).toBeVisible();
+  await expect(counting.getByRole('link', { name: 'Change in Scenola' })).toBeVisible();
   await options.close();
 }
 

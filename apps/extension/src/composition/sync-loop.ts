@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// What talks to MediaTracker in the background: the outbox drained, the receipts read and the
+// What talks to Scenola in the background: the outbox drained, the receipts read and the
 // connection checked. Each pass refreshes the toolbar and the open pages after it, and is
 // remembered until it settles, so a disconnect and *Clear all local data* can wait for it.
 

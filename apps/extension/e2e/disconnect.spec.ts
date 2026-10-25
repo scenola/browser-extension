@@ -20,7 +20,7 @@ declare const self: { dispatchEvent(event: Event): boolean };
  */
 async function storedCounts(): Promise<Record<string, number>> {
   const db = await new Promise<IDBDatabase>((resolve, reject) => {
-    const open = indexedDB.open('mediatracker');
+    const open = indexedDB.open('scenola');
     open.onsuccess = () => {
       resolve(open.result);
     };
@@ -109,7 +109,7 @@ test('disconnect and delete: no history, no queued plays, and a new connection s
 
   // Another connection: nothing old is sent, whatever wakes the outbox.
   const attempts = api.playAttempts().length;
-  await connection.getByRole('button', { name: 'Connect MediaTracker' }).click();
+  await connection.getByRole('button', { name: 'Connect Scenola' }).click();
   await expect(connection.getByText('Connected since')).toBeVisible({ timeout: 20_000 });
   await (await sw()).evaluate(travel, 10 * 60_000);
   await new Promise((r) => setTimeout(r, 5_000));

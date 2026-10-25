@@ -359,7 +359,7 @@ async function sameFiles(
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const DEFAULT_BUILD = join(ROOT, 'apps', 'extension', '.output', 'chrome-mv3');
 const DEFAULT_OUT_DIR = join(ROOT, 'dist', 'release');
-/** `MediaTracker for Chrome` → `mediatracker-for-chrome`: the brand's name, file-safe. */
+/** `Scenola - Movie & TV Tracker` → `scenola-movie-tv-tracker`: the brand's name, file-safe. */
 const FILE_STEM = EXTENSION_NAME.toLowerCase().replace(/[^a-z0-9]+/gu, '-');
 
 /** `SOURCE_DATE_EPOCH` as stated, or else the time of the commit checked out. */

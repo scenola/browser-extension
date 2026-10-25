@@ -3,13 +3,13 @@
 _For a maintainer to open as a **Service wanted** issue (labels: `service wanted`)._
 
 - **Service:** Prime Video — `primevideo.com`
-- **Id:** `prime_video`, permanent: it is the `provider.prime_video` namespace MediaTracker
+- **Id:** `prime_video`, permanent: it is the `provider.prime_video` namespace Scenola
   remembers answers under, whatever the service is called next.
 - **Countries:** many. Write down the country your samples come from: players differ by region.
 
 ## What happens today
 
-MediaTracker for Chrome tracks `primevideo.com` from its first release, so the site needs no
+The Scenola extension tracks `primevideo.com` from its first release, so the site needs no
 permission prompt. With no module, the **generic readers** read it: structured data on the page
 (JSON-LD), the media session, Open Graph, the page title and the page's address. A viewing
 starts only when the page itself says it is a film or an episode — or a series whose address

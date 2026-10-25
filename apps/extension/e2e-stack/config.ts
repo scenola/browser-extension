@@ -3,7 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 // What the stack build and the stack run must agree on (`pnpm e2e:stack`, the maintainer's).
-// The API is a real MediaTracker backend on this machine, not the mock.
+// The API is a real Scenola backend on this machine, not the mock.
 
 import { fileURLToPath } from 'node:url';
 

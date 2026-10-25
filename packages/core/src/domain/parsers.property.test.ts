@@ -11,7 +11,7 @@
 //   is bounded (a generous time cap, ≥ 200 ms);
 // - the label grammar gives back the numbers of every form it and the locale tables document;
 // - `normalizeTitle` is a comparison form, so normalising twice changes nothing;
-// - the sanitiser's output holds no e-mail, JWT, MediaTracker token or URL query, and no value
+// - the sanitiser's output holds no e-mail, JWT, Scenola token or URL query, and no value
 //   under a key naming the person.
 //
 // The seed is fixed so CI runs the same cases.

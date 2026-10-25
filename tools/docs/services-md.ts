@@ -71,7 +71,7 @@ export async function servicesMarkdown(sites: readonly BuiltInSite[]): Promise<s
     '',
     '# Services',
     '',
-    'The sites MediaTracker for Chrome tracks from its first release, from the service registry',
+    'The sites the Scenola extension tracks from its first release, from the service registry',
     "(`packages/services/src/registry.ts`). Every host below is in the first release's host",
     'permissions, so a service never arrives through a new permission prompt. Any',
     'other film or TV site can be allowed from Settings or the popup, and is read by the generic',

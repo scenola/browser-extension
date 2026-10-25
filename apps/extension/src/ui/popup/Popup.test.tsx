@@ -86,7 +86,7 @@ const NOW_PLAYING: readonly (readonly [string, NowPlaying, RegExp])[] = [
       reason: null,
       problem: null,
     },
-    /MediaTracker doesn't track this site/u,
+    /Scenola doesn't track this site/u,
   ],
 ];
 
@@ -296,7 +296,7 @@ describe('the connection check', () => {
     };
     const checked = { status: 'active', expiresAt: soon, checkedAt: Date.now() } as const;
     render(<Popup ui={fakeUi(state(null, { connection: token, connectionCheck: checked })).ui} />);
-    expect(screen.getByRole('note').textContent).toMatch(/Reconnect MediaTracker soon/u);
+    expect(screen.getByRole('note').textContent).toMatch(/Reconnect Scenola soon/u);
     cleanup();
 
     render(
@@ -314,7 +314,7 @@ describe('the connection check', () => {
   test('a lost key keeps its own words', () => {
     const connection = { kind: 'broken', reason: 'key_missing' } as const;
     render(<Popup ui={fakeUi(state(null, { connection })).ui} />);
-    expect(screen.getByRole('note').textContent).toMatch(/Reconnect MediaTracker to keep adding/u);
+    expect(screen.getByRole('note').textContent).toMatch(/Reconnect Scenola to keep adding/u);
   });
 
   test('braked: said in words, plays held, with the way to review it', () => {
@@ -347,10 +347,10 @@ describe('not connected', () => {
 
     const controls = [...document.querySelectorAll('button, a[href], input, select, textarea')];
     expect(controls).toHaveLength(1);
-    expect(screen.getByRole('button', { name: 'Connect MediaTracker' })).toBe(controls[0]);
+    expect(screen.getByRole('button', { name: 'Connect Scenola' })).toBe(controls[0]);
     expect(screen.queryByText(/Will be added/u)).toBeNull();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
     await waitFor(() => {
       expect(create).toHaveBeenCalledWith(
         expect.objectContaining({ url: expect.stringMatching(/welcome\.html$/u) as string }),
@@ -413,7 +413,7 @@ describe('waiting for you', () => {
     render(<Popup ui={page.ui} />);
 
     const section = screen.getByRole('region', { name: 'Waiting for you' });
-    const link = within(section).getByRole('link', { name: /Confirm in MediaTracker/u });
+    const link = within(section).getByRole('link', { name: /Confirm in Scenola/u });
     // The development build's web app is localhost:3000.
     expect(link.getAttribute('href')).toBe('http://localhost:3000/today');
     expect(within(section).getByText(/Severance/u)).toBeTruthy();
@@ -456,14 +456,14 @@ describe('recently', () => {
   const VERDICTS: readonly (readonly [ReceiptState, string | null, RegExp])[] = [
     ['recorded', null, /Added/u],
     ['duplicate', null, /Already in your diary/u],
-    ['needs_confirmation', 'text_only', /Confirm in MediaTracker/u],
-    ['needs_confirmation', 'numbering_unconfirmed', /Confirm in MediaTracker/u],
-    ['held', 'plus_lapsed', /Held — MediaTracker Plus ended; kept 30 days/u],
-    ['held', 'braked', /MediaTracker paused this connection — review in the app/u],
+    ['needs_confirmation', 'text_only', /Confirm in Scenola/u],
+    ['needs_confirmation', 'numbering_unconfirmed', /Confirm in Scenola/u],
+    ['held', 'plus_lapsed', /Held — Scenola Plus ended; kept 30 days/u],
+    ['held', 'braked', /Scenola paused this connection — review in the app/u],
     ['ignored', 'not_completed', /Not enough watched — not added/u],
-    ['ignored', 'unknown_id', /Not something MediaTracker tracks/u],
-    ['ignored', 'not_served', /Not something MediaTracker tracks/u],
-    ['ignored', 'medium_not_served', /Not something MediaTracker tracks/u],
+    ['ignored', 'unknown_id', /Not something Scenola tracks/u],
+    ['ignored', 'not_served', /Not something Scenola tracks/u],
+    ['ignored', 'medium_not_served', /Not something Scenola tracks/u],
   ];
 
   test.each(VERDICTS)('%s / %s reads %s', async (receiptState, reason, words) => {

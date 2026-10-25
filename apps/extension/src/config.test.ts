@@ -96,7 +96,7 @@ describe('a store build', () => {
     'https://router.home.arpa',
     'https://api.test',
     'https://intranet',
-    'https://mediatrackerxyz.onion',
+    'https://scenolaxyz.onion',
     'https://api.home.alt',
     'https://mt.lan',
     'https://nas.home',
@@ -112,7 +112,7 @@ describe('a store build', () => {
   });
 
   // A public name passes, however many labels it has.
-  test.each(['https://api.mediatracker.app', 'https://a.b.example.com', 'https://example.org'])(
+  test.each(['https://api.scenola.app', 'https://a.b.example.com', 'https://example.org'])(
     'accepts %s',
     (url) => {
       expect(resolveConfig('store', { ...STORE_URLS, MT_API_BASE_URL: url }).apiBaseUrl).toBe(url);

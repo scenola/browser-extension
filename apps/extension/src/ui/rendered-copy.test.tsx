@@ -204,7 +204,7 @@ test('the welcome page, in every step and every connect answer', async () => {
       data: { result: { kind } },
     }));
     show(<Welcome ui={page.ui} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
     await screen.findByRole('alert');
     check();
   }
@@ -214,7 +214,7 @@ test('the welcome page, in every step and every connect answer', async () => {
       : { ok: true, data: DEFAULT_SETTINGS },
   );
   show(<Welcome ui={ok.ui} />);
-  fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
   await screen.findByRole('heading', { name: 'Where to track' });
   check();
   fireEvent.click(screen.getByRole('button', { name: 'Continue' }));

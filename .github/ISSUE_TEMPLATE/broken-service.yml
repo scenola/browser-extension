@@ -1,5 +1,5 @@
 name: Broken service
-description: A streaming site MediaTracker for Chrome knows stopped adding what you watch.
+description: A streaming site the Scenola extension knows stopped adding what you watch.
 labels: ['broken service']
 body:
   - type: markdown

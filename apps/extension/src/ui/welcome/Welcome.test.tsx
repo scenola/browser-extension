@@ -71,9 +71,9 @@ describe('step 1: Connect', () => {
   test('before the Connect button, says what it reads and sends, and links to the inventory', () => {
     render(<Welcome ui={worker(connected).ui} />);
     const data = screen.getByText(
-      "While a film or an episode plays on a streaming site, MediaTracker for Chrome reads what the page says it is and how far you've got, and keeps that in this browser. Once you connect, it sends MediaTracker what you watched: its titles, years, season and episode, when you watched it and how far. Never the page's address or anything else you browse.",
+      "While a film or an episode plays on a streaming site, the Scenola extension reads what the page says it is and how far you've got, and keeps that in this browser. Once you connect, it sends Scenola what you watched: its titles, years, season and episode, when you watched it and how far. Never the page's address or anything else you browse.",
     );
-    const button = screen.getByRole('button', { name: 'Connect MediaTracker' });
+    const button = screen.getByRole('button', { name: 'Connect Scenola' });
     // Read before the choice it informs: earlier in the page, and the button's description.
     expect(data.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(button.getAttribute('aria-describedby')?.split(' ')).toContain(data.id);
@@ -86,21 +86,21 @@ describe('step 1: Connect', () => {
     const page = worker(connected);
     render(<Welcome ui={page.ui} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
 
     expect(await screen.findByRole('heading', { name: 'Where to track' })).toBeTruthy();
     // The development build's strategy is the approval window.
     expect(page.sent).toContainEqual({ type: 'ui/connect', strategy: 'pkce_dpop' });
   });
 
-  test('a cancelled connect stays on step 1 and names MediaTracker Plus', async () => {
+  test('a cancelled connect stays on step 1 and names Scenola Plus', async () => {
     render(<Welcome ui={worker({ kind: 'cancelled' }).ui} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
 
-    expect(await screen.findByText(/MediaTracker Plus/u)).toBeTruthy();
+    expect(await screen.findByText(/Scenola Plus/u)).toBeTruthy();
     expect(screen.queryByRole('heading', { name: 'Where to track' })).toBeNull();
-    expect(screen.getByRole('button', { name: 'Connect MediaTracker' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Connect Scenola' })).toBeTruthy();
   });
 
   /** The token endpoint's answers, and the words each is shown by. */
@@ -110,17 +110,17 @@ describe('step 1: Connect', () => {
     ['forbidden', /Plus/u, 'http://localhost:3000'],
     [
       'limit_reached',
-      /You have ten connected services — remove one in MediaTracker/u,
+      /You have ten connected services — remove one in Scenola/u,
       'http://localhost:3000/settings?tab=connections',
     ],
-    ['unavailable', /MediaTracker didn't answer — try again/u, null],
+    ['unavailable', /Scenola didn't answer — try again/u, null],
     ['feature_closed', /available/u, null],
   ];
 
   test.each(ANSWERS)('%s is said in words', async (kind, words, link) => {
     render(<Welcome ui={worker({ kind } as ConnectResult).ui} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
 
     const alert = await screen.findByRole('alert');
     expect(alert.textContent).toMatch(words);
@@ -132,7 +132,7 @@ describe('step 1: Connect', () => {
 describe('step 2: Where to track', () => {
   async function stepTwo(page = worker(connected)) {
     render(<Welcome ui={page.ui} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
     await screen.findByRole('heading', { name: 'Where to track' });
     return { page };
   }
@@ -179,14 +179,14 @@ describe('accessibility', () => {
     const { container } = render(<Welcome ui={page.ui} />);
     expect((await axe(container)).violations.map((v) => v.id)).toEqual([]);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
     await screen.findByRole('alert');
     expect((await axe(container)).violations.map((v) => v.id)).toEqual([]);
 
     cleanup();
     const ok = worker(connected);
     const second = render(<Welcome ui={ok.ui} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Connect MediaTracker' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Connect Scenola' }));
     await screen.findByRole('heading', { name: 'Where to track' });
     expect((await axe(second.container)).violations.map((v) => v.id)).toEqual([]);
 

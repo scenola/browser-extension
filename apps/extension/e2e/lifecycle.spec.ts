@@ -3,7 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 // The worker's life and the network's: a worker stopped mid-viewing, a server that answers 503,
-// a play MediaTracker asks about. The fixture is the Netflix episode of netflix.spec.ts.
+// a play Scenola asks about. The fixture is the Netflix episode of netflix.spec.ts.
 
 import { expect, playsArrive, test } from './fixtures.ts';
 import { NETFLIX } from './site.ts';
@@ -86,7 +86,7 @@ test.describe('offline at the finish', () => {
   });
 });
 
-test.describe('a play MediaTracker asks about', () => {
+test.describe('a play Scenola asks about', () => {
   test.use({
     script: {
       progression: () => [{ afterMs: 0, state: 'needs_confirmation', reason: 'text_only' }],
@@ -106,7 +106,7 @@ test.describe('a play MediaTracker asks about', () => {
 
     const view = await popup(page);
     const text = await view.waitForText('Waiting for you');
-    expect(text).toContain('Confirm in MediaTracker');
+    expect(text).toContain('Confirm in Scenola');
     expect(text).toContain('Breaking Bad');
     // Up Next in the web app (WEB_APP_BASE_URL + /today); the e2e build's web app is the
     // mock's URL.

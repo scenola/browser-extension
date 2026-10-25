@@ -3,14 +3,14 @@
 _For a maintainer to open as a **Service wanted** issue (labels: `service wanted`)._
 
 - **Service:** HBO Max — `hbomax.com`
-- **Id:** `hbo_max`, permanent: it is the `provider.hbo_max` namespace MediaTracker remembers
+- **Id:** `hbo_max`, permanent: it is the `provider.hbo_max` namespace Scenola remembers
   answers under, whatever the service is called next. (It was Max from 2023 to July 2025;
   `max.com` now redirects to `hbomax.com`, so `max.com` is not a host here.)
 - **Countries:** many. Write down the country your samples come from: players differ by region.
 
 ## What happens today
 
-MediaTracker for Chrome tracks `hbomax.com` from its first release, so the site needs no
+The Scenola extension tracks `hbomax.com` from its first release, so the site needs no
 permission prompt. With no module, the **generic readers** read it: structured data on the page
 (JSON-LD), the media session, Open Graph, the page title and the page's address. A viewing
 starts only when the page itself says it is a film or an episode — or a series whose address

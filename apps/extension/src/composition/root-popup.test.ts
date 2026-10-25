@@ -283,7 +283,7 @@ describe('the ui requests', () => {
   });
 
   // Clear history (confirmed first): the plays already sent and their answers go, those still
-  // waiting for an answer too; the diary in MediaTracker keeps them, and nothing else goes.
+  // waiting for an answer too; the diary in Scenola keeps them, and nothing else goes.
   test('ui/clear-history empties the history and keeps the viewings, the settings and the connection', async () => {
     const h = harness({ settings: { trackIncognito: true } });
     await playFilm(h, { tabId: 1, frameId: 0, url: PRIME_FILM }, WHOLE_FILM.slice(0, 4));

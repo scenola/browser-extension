@@ -21,7 +21,7 @@ test('a blocked host: no collector, nothing sent, and the popup says so', async 
 
   expect(await injected(page)).toEqual({ collector: false, bootstrap: false });
   const view = await popup(page);
-  await view.waitForText("MediaTracker doesn't track this site");
+  await view.waitForText("Scenola doesn't track this site");
   view.close();
 
   await page.evaluate(() => window.e2e.ended());

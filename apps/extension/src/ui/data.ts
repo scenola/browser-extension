@@ -63,7 +63,7 @@ export function useSettings(ui: UiConnection) {
 
 /**
  * Keys and values an export must never hold: the credential and the key pair, by name, and
- * anything shaped like a MediaTracker credential. The worker builds the export without them;
+ * anything shaped like a Scenola credential. The worker builds the export without them;
  * this is the page's own check before a file leaves the browser.
  */
 const SECRET_KEYS: ReadonlySet<string> = new Set([

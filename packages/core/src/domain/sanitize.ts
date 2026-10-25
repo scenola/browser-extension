@@ -29,7 +29,7 @@ export type Removed = Readonly<Record<RemovedKind, number>>;
  * any snapshot.
  *
  * - **A string that looks personal is dropped** wherever it is — a selector value, the JSON-LD,
- *   the Media Session, Open Graph, the page state: an e-mail address, a JWT, a MediaTracker
+ *   the Media Session, Open Graph, the page state: an e-mail address, a JWT, a Scenola
  *   token (`mts_…`, `mt_rt_…`), a URL with a query, and any string too long to read through
  *   (over 2,000 characters). The document title and the URL's hash, which must stay strings,
  *   become empty instead — the hash also when it names the person as a key below would

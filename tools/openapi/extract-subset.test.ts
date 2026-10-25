@@ -292,7 +292,7 @@ describe('extractSubset', () => {
       items: { type: 'string' },
     });
     expect(subset.info).toEqual({
-      title: 'Backend',
+      title: 'Scenola API',
       version: '1.2.3',
       description: expect.stringContaining('pnpm openapi:sync') as unknown,
     });
@@ -413,7 +413,7 @@ describe('mentionsHost', () => {
       'served from localhost:8000',
       'proxied at 10.0.0.7',
       'the box db.cluster.internal answers',
-      'call api.mediatracker.com.',
+      'call api.scenola.com.',
       'ws://realtime',
       'Mixed CASE: API.Example.COM',
     ]) {

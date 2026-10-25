@@ -1,8 +1,8 @@
-# MediaTracker for Chrome
+# Scenola - Movie & TV Tracker
 
 A Chrome MV3 extension (WXT, TypeScript, Preact) that reads what a streaming page is playing and
-reports finished viewings to MediaTracker. pnpm workspace: `packages/core` (pure domain and use
-cases), `packages/api` (the MediaTracker protocol), `packages/services` (service modules and the
+reports finished viewings to Scenola. pnpm workspace: `packages/core` (pure domain and use
+cases), `packages/api` (the Scenola protocol), `packages/services` (service modules and the
 registry), `apps/extension` (the only package that knows `chrome`), `tools/` (mock API, OpenAPI
 subset, i18n, release, gates). How it fits together and the rules behind it:
 @docs/architecture.md. Setup and every check: @CONTRIBUTING.md.
@@ -67,6 +67,6 @@ Each has its reason in `docs/architecture.md`; a test or gate usually fails when
 - YouTube and `.ru`/`.рф` hosts are blocked by design (`packages/core/src/domain/blocked-sites.ts`);
   do not add exceptions.
 - Development builds share one extension id, from the committed `apps/extension/dev-key.pub`; a
-  local MediaTracker backend accepts sign-ins only from ids it lists.
+  local Scenola backend accepts sign-ins only from ids it lists.
 - `pnpm dev` runs against the mock API (`tools/mock-api`, port 8787); `pnpm dev:backend` against a
-  local MediaTracker on ports 8000 and 3000.
+  local Scenola on ports 8000 and 3000.

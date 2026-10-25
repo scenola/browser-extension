@@ -32,9 +32,9 @@ export interface RunningCollector {
   stop(): void;
 }
 
-const COLLECTOR: unique symbol = Symbol.for('mediatracker.collector');
-const BOOTSTRAP: unique symbol = Symbol.for('mediatracker.bootstrap');
-const BOOTSTRAP_ALIVE: unique symbol = Symbol.for('mediatracker.bootstrap-alive');
+const COLLECTOR: unique symbol = Symbol.for('scenola.collector');
+const BOOTSTRAP: unique symbol = Symbol.for('scenola.bootstrap');
+const BOOTSTRAP_ALIVE: unique symbol = Symbol.for('scenola.bootstrap-alive');
 
 interface Slots {
   [COLLECTOR]?: unknown;

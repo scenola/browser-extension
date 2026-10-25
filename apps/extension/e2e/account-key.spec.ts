@@ -20,7 +20,7 @@ declare const self: { dispatchEvent(event: Event): boolean };
 /** Evaluated in the worker: how many records the outbox and the history hold. */
 async function storedCounts(): Promise<Record<string, number>> {
   const db = await new Promise<IDBDatabase>((resolve, reject) => {
-    const open = indexedDB.open('mediatracker');
+    const open = indexedDB.open('scenola');
     open.onsuccess = () => {
       resolve(open.result);
     };

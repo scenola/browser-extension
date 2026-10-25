@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// A local mock of the MediaTracker routes the extension uses, for contributors (who cannot run the
+// A local mock of the Scenola routes the extension uses, for contributors (who cannot run the
 // private backend) and for the end-to-end tests: `pnpm mock-api` (port 8787), or
 // `startMockApi({ port: 0 })` in a test. It behaves as the server does — the backend line each
 // rule mirrors is named beside it — so code that passes against it passes against the server:
@@ -366,7 +366,7 @@ async function main(): Promise<void> {
     ...(publicUrl === undefined ? {} : { publicUrl }),
   });
   process.stdout.write(
-    `Mock MediaTracker API on ${api.url}\n` +
+    `Mock Scenola API on ${api.url}\n` +
       `  set the extension's API and web-app base URLs to ${api.url}\n` +
       '  (a proof names the API base URL; pass --public-url if the extension uses another)\n',
   );
