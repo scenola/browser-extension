@@ -13,8 +13,7 @@
 //   node tools/dev-key/generate.ts --id       print the id of the committed key
 
 import { createHash, generateKeyPairSync } from 'node:crypto';
-import { existsSync } from 'node:fs';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, rm, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 
@@ -62,16 +61,38 @@ async function main(): Promise<void> {
     process.stdout.write(`dev-key.pub:\n${key}\n\ndev-extension-id.txt:\n${id}\n`);
     return;
   }
-  if (existsSync(DEV_KEY_FILE) || existsSync(DEV_ID_FILE)) {
-    process.stderr.write(
-      'dev-key.pub already exists: the dev backend allowlists its id. Remove it first to replace it.\n',
-    );
-    process.exitCode = 1;
+  if (!(await create(DEV_KEY_FILE, `${key}\n`))) {
+    refuseToReplace();
     return;
   }
-  await writeFile(DEV_KEY_FILE, `${key}\n`);
-  await writeFile(DEV_ID_FILE, `${id}\n`);
+  if (!(await create(DEV_ID_FILE, `${id}\n`))) {
+    // A key beside someone else's id would pin the wrong id: take back the key just written.
+    await rm(DEV_KEY_FILE);
+    refuseToReplace();
+    return;
+  }
   process.stdout.write(`development extension id: ${id}\n`);
+}
+
+/**
+ * Writes a file that is not there yet; false, writing nothing, when it is. The check and the
+ * write are one call, so a file that appears in between is never overwritten.
+ */
+async function create(path: string, text: string): Promise<boolean> {
+  try {
+    await writeFile(path, text, { flag: 'wx' });
+    return true;
+  } catch (error: unknown) {
+    if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
+    return false;
+  }
+}
+
+function refuseToReplace(): void {
+  process.stderr.write(
+    'dev-key.pub already exists: the dev backend allowlists its id. Remove it first to replace it.\n',
+  );
+  process.exitCode = 1;
 }
 
 if (import.meta.main) await main();
