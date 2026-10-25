@@ -41,7 +41,8 @@ const showIds = (r: ServiceReading) => (r.providerIds ?? []).filter((p) => p.lev
 
 // The wire's rules for a provider entry, as the server validates a play's evidence.
 const PROVIDER_KEY = /^[a-z][A-Za-z0-9._-]*$/u;
-const PROVIDER_VALUE = /^[ !#-[\]-~]+$/u;
+// Printable ASCII, without `"` or `\`.
+const PROVIDER_VALUE = /^(?!.*["\\])[ -~]+$/u;
 
 function expectWithinWire(r: ServiceReading | null): void {
   if (r === null) return;
