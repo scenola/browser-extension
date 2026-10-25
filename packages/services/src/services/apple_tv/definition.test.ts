@@ -42,7 +42,8 @@ const valuesAt = (r: ServiceReading, level: 'title' | 'show'): string[] =>
 
 // The wire's rules, as the server validates a play's evidence.
 const PROVIDER_KEY = /^[a-z][A-Za-z0-9._-]*$/u;
-const PROVIDER_VALUE = /^[ !#-[\]-~]+$/u;
+// Printable ASCII, without `"` or `\`.
+const PROVIDER_VALUE = /^(?!.*["\\])[ -~]+$/u;
 const IMDB = /^tt[0-9]{5,10}$/u;
 
 function expectWithinWire(r: ServiceReading | null): void {

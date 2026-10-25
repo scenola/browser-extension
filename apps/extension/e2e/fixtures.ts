@@ -146,11 +146,13 @@ async function attach(target: Target): Promise<PopupView> {
   let next = 1;
   const waiting = new Map<number, (value: unknown) => void>();
   ws.onmessage = (event: MessageEvent) => {
-    const message = JSON.parse(String(event.data)) as { id?: number };
-    if (message.id !== undefined) {
-      waiting.get(message.id)?.(message);
-      waiting.delete(message.id);
-    }
+    const message = JSON.parse(String(event.data)) as { id?: unknown };
+    // Only an answer to one of this socket's own requests is passed on; events carry no id.
+    if (typeof message.id !== 'number') return;
+    const answer = waiting.get(message.id);
+    if (typeof answer !== 'function') return;
+    waiting.delete(message.id);
+    answer(message);
   };
   const evaluate = (expression: string): Promise<unknown> =>
     new Promise((resolve) => {
