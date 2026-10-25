@@ -438,7 +438,7 @@ export class UiRequests {
       await permissions.forget(`https://${host}`);
       await permissions.forget(`http://${host}`);
     }
-    if (patch.allSites === false && current.allSites) await permissions.allSites(false);
+    if (patch.allSites === false && current.allSites) await permissions.forgetAllSites();
     await permissions.reconcile();
     await this.#showChanges();
     return ok(await settings.get());

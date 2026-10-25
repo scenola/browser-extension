@@ -7,6 +7,10 @@
 // page, or from Chrome's own site-access menu — and the bootstrap registered on exactly those,
 // minus the block list and the person's exclusions. The granted permissions are the truth;
 // `allowedHosts` and `allSites` in the settings mirror them.
+//
+// It never asks for access: Chrome shows its prompt only from a user gesture, and the worker has
+// none. The pages ask, in their click handlers (popup/SiteCard.tsx, sites-switch.tsx), then tell
+// the worker; this side reads, gives back and reconciles.
 
 import { BLOCKED_HOST_SUFFIXES, BLOCKED_TLD_FORMS, isBlockedHost } from '@mt/core';
 import type { Settings, SettingsValue } from '@mt/core';
@@ -21,7 +25,7 @@ import { canonicalHost } from './settings';
 /** The run-time registration of the bootstrap content script. */
 const GRANTED_SCRIPT_ID = 'mt-bootstrap-granted';
 
-type Permissions = Pick<typeof Browser.permissions, 'request' | 'contains' | 'remove' | 'getAll'>;
+type Permissions = Pick<typeof Browser.permissions, 'contains' | 'remove' | 'getAll'>;
 type Scripting = Pick<
   typeof Browser.scripting,
   | 'getRegisteredContentScripts'
@@ -31,10 +35,8 @@ type Scripting = Pick<
 >;
 
 export interface SitePermissions {
-  /** Asks for one site's access, from a click handler in a page: `true` when granted. */
-  request(origin: string): Promise<boolean>;
-  /** On: asks for every site, from a click handler in a page. Off: gives that access back. */
-  allSites(on: boolean): Promise<boolean>;
+  /** Gives the access to every site back (the all-sites switch turned off). */
+  forgetAllSites(): Promise<void>;
   /** The site's access is granted. */
   has(origin: string): Promise<boolean>;
   /** Access to every site is granted. */
@@ -113,16 +115,8 @@ export class ChromeSitePermissions implements SitePermissions {
     this.#settings = settings;
   }
 
-  async request(origin: string): Promise<boolean> {
-    const pattern = originPattern(origin);
-    if (pattern === null) return false;
-    return this.#permissions.request({ origins: [pattern] });
-  }
-
-  async allSites(on: boolean): Promise<boolean> {
-    if (on) return this.#permissions.request({ origins: [...ALL_SITES_PATTERNS] });
+  async forgetAllSites(): Promise<void> {
     await this.#permissions.remove({ origins: [...ALL_SITES_PATTERNS] });
-    return false;
   }
 
   async has(origin: string): Promise<boolean> {

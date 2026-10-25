@@ -73,8 +73,7 @@ export class TestSettings extends InMemorySettings implements AppSettings {
 /** `SitePermissions` (platform/site-permissions.ts), every member a mock. */
 function fakePermissions(granted: readonly string[] = []) {
   const permissions = {
-    request: vi.fn(() => Promise.resolve(false)),
-    allSites: vi.fn(() => Promise.resolve(false)),
+    forgetAllSites: vi.fn(() => Promise.resolve()),
     has: vi.fn((origin: string) => Promise.resolve(granted.includes(origin))),
     hasAllSites: vi.fn(() => Promise.resolve(false)),
     forget: vi.fn(() => Promise.resolve()),

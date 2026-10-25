@@ -196,6 +196,16 @@ describe('the ui requests', () => {
     expect((await h.history.recent(10)).map((entry) => entry.playId)).toEqual(['an-hour']);
   });
 
+  // The switch's prompt is the page's; turning it off is the worker's, and gives Chrome's
+  // access to every site back rather than only forgetting it in the settings.
+  test('ui/settings turning all sites off gives that access back, then reconciles', async () => {
+    const h = harness({ settings: { allSites: true } });
+    const answer = await ask(h, { type: 'ui/settings', patch: { allSites: false } });
+    expect(answer.response.ok).toBe(true);
+    expect(h.permissions.forgetAllSites).toHaveBeenCalledTimes(1);
+    expect(h.permissions.reconcile).toHaveBeenCalled();
+  });
+
   // A site is added only from a click, and the worker only checks what was granted.
   test('ui/track-site refuses an origin Chrome has not granted', async () => {
     const h = harness();

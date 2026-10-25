@@ -102,11 +102,8 @@ export interface RootUi {
 }
 
 class Permissions implements SitePermissions {
-  request(): Promise<boolean> {
-    return Promise.resolve(true);
-  }
-  allSites(): Promise<boolean> {
-    return Promise.resolve(true);
+  forgetAllSites(): Promise<void> {
+    return Promise.resolve();
   }
   has(): Promise<boolean> {
     return Promise.resolve(true);
