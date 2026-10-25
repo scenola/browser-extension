@@ -223,7 +223,6 @@
   "options.about.fingerprint_detail": "A SHA-256 of this build's code. Compare it with the one published with the release.",
   "options.about.fingerprint_missing": "Not available in this build",
   "options.about.source": "Source code",
-  "options.about.source_soon": "Published under the licence below with the first release.",
   "options.about.source_link": "View the source",
   "options.about.licence": "Licence",
   "options.about.licence_name": "Mozilla Public License 2.0",

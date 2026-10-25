@@ -44,7 +44,6 @@ export const catalog: Catalog = {
     "options.about.privacy_policy": (p, f) => "[" + f.s(p, "product") + "'š þŕîṽåçý þöļîçý" + "~~~~~~~~~]",
     "options.about.source": () => "[" + "Šöûŕçé çöðé" + "~~~~]",
     "options.about.source_link": () => "[" + "Ṽîéŵ ţĥé šöûŕçé" + "~~~~~~]",
-    "options.about.source_soon": () => "[" + "Þûƀļîšĥéð ûñðéŕ ţĥé ļîçéñçé ƀéļöŵ ŵîţĥ ţĥé ƒîŕšţ ŕéļéåšé." + "~~~~~~~~~~~~~~~~~~~~]",
     "options.about.title": () => "[" + "Åƀöûţ" + "~~]",
     "options.about.version": () => "[" + "Ṽéŕšîöñ" + "~~~]",
     "options.connection.broken": () => "[" + "Ŕéçöññéçţ ñééðéð" + "~~~~~~]",

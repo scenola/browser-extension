@@ -142,12 +142,7 @@ export function AboutSection() {
         </Row>
         <Row
           title={t('options.about.source')}
-          detail={SOURCE_REPOSITORY_URL === null ? t('options.about.source_soon') : undefined}
-          control={
-            SOURCE_REPOSITORY_URL === null ? undefined : (
-              <Link href={SOURCE_REPOSITORY_URL}>{t('options.about.source_link')}</Link>
-            )
-          }
+          control={<Link href={SOURCE_REPOSITORY_URL}>{t('options.about.source_link')}</Link>}
         />
         <Row
           title={t('options.about.licence')}
@@ -204,11 +199,9 @@ export function AboutSection() {
           <Link href={`${WEB_APP_BASE_URL}${WEB_ROUTES.privacy}`}>
             {t('options.about.privacy_policy')}
           </Link>
-          {SOURCE_REPOSITORY_URL === null ? null : (
-            <Link href={`${SOURCE_REPOSITORY_URL}/blob/main/docs/privacy.md`}>
-              {t('options.about.privacy_notes')}
-            </Link>
-          )}
+          <Link href={`${SOURCE_REPOSITORY_URL}/blob/main/docs/privacy.md`}>
+            {t('options.about.privacy_notes')}
+          </Link>
         </p>
       </div>
     </Section>

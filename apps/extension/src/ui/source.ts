@@ -4,12 +4,8 @@
 
 // Where the extension's source and its licence are published, for the About screen.
 
-/**
- * The public repository. `null` until it exists: the maintainer sets it before the first
- * release, and the About screen shows the source link and the link to `docs/privacy.md` from
- * then on. Nothing is guessed meanwhile.
- */
-export const SOURCE_REPOSITORY_URL: string | null = null;
+/** The public repository: the About screen links to it, and to `docs/privacy.md` in it. */
+export const SOURCE_REPOSITORY_URL = 'https://github.com/scenola/browser-extension';
 
 /** The licence's own text (MPL-2.0, `LICENSE`). */
 export const LICENCE_URL = 'https://mozilla.org/MPL/2.0/';

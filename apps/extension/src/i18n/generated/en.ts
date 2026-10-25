@@ -44,7 +44,6 @@ export const catalog: Catalog = {
     "options.about.privacy_policy": (p, f) => f.s(p, "product") + "'s privacy policy",
     "options.about.source": () => "Source code",
     "options.about.source_link": () => "View the source",
-    "options.about.source_soon": () => "Published under the licence below with the first release.",
     "options.about.title": () => "About",
     "options.about.version": () => "Version",
     "options.connection.broken": () => "Reconnect needed",

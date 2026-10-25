@@ -43,7 +43,6 @@ export type AppMessageKey =
   | "options.about.privacy_policy"
   | "options.about.source"
   | "options.about.source_link"
-  | "options.about.source_soon"
   | "options.about.title"
   | "options.about.version"
   | "options.connection.broken"
