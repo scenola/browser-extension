@@ -1,6 +1,6 @@
 # Architecture
 
-How MediaTracker for Chrome is put together, and the rules that keep it that way. A rule marked
+How the Scenola extension is put together, and the rules that keep it that way. A rule marked
 **Rule** is one a change must respect; each carries its reason, so an argument with it belongs in
 an issue, not in a pull request that works around it.
 
@@ -15,19 +15,19 @@ an issue, not in a pull request that works around it.
   dependency-cruiser and per-package `tsconfig` files. Where a boundary is a security boundary —
   contributor-written service code — it is a separate realm (a worker of a sandboxed page), not a
   lint rule.
-- **The extension reports evidence; MediaTracker decides.** **Rule:** nothing in the extension
+- **The extension reports evidence; Scenola decides.** **Rule:** nothing in the extension
   identifies a title. A play carries what the page stated, and the server's one matching ladder
   decides which title it was, whether it is a repeat and whether to ask the person. A second
   matcher here would disagree with the server's and would need catalogue data the connection
   cannot read. So a service id is sent only when the page states it, never computed or looked up,
-  and no catalogue data (posters, MediaTracker titles) ever enters the extension.
+  and no catalogue data (posters, Scenola titles) ever enters the extension.
 
 ## Packages
 
 ```mermaid
 flowchart TD
   ext["<b>apps/extension</b><br/>WXT app: entry points, Chrome adapters,<br/>the collector, the pages"]
-  api["<b>packages/api</b><br/>the MediaTracker protocol:<br/>PKCE, DPoP, plays, receipts"]
+  api["<b>packages/api</b><br/>the Scenola protocol:<br/>PKCE, DPoP, plays, receipts"]
   services["<b>packages/services</b><br/>the module SDK, the registry,<br/>the built-in modules"]
   core["<b>packages/core</b><br/>domain + use cases behind ports<br/>no DOM, no chrome.*"]
 
@@ -109,7 +109,7 @@ flowchart TB
 
   sw["<b>service worker</b><br/>use cases, storage, the connection"]
   pages["popup, settings, welcome"]
-  mt[("MediaTracker API")]
+  mt[("Scenola API")]
 
   subgraph offscreen["offscreen document"]
     subgraph sandbox["sandboxed iframe"]
@@ -124,7 +124,7 @@ flowchart TB
   sw -- "plays, receipts" --> mt
 ```
 
-One play, from the first `play` to MediaTracker's answer. The numbers are the steps below.
+One play, from the first `play` to Scenola's answer. The numbers are the steps below.
 
 ```mermaid
 sequenceDiagram
@@ -133,7 +133,7 @@ sequenceDiagram
   participant C as collector
   participant R as state-path reader<br/>(MAIN world)
   participant M as modules' worker
-  participant MT as MediaTracker
+  participant MT as Scenola
 
   B->>SW: 1 · a video played
   SW->>SW: 2 · site decision, from sender.url
@@ -202,7 +202,7 @@ pure function.
    viewing.
 9. **`IngestObservation`** turns the samples and the merged reading into sittings and viewings
    (below); **`ReportViewing`** puts a play in the **outbox** before any network call; and
-   **`DrainOutbox`** and **`RefreshReceipts`** talk to MediaTracker.
+   **`DrainOutbox`** and **`RefreshReceipts`** talk to Scenola.
 
 **Messages** are one protocol (`apps/extension/src/messaging/protocol.ts`): a versioned
 discriminated union, validated with valibot on arrival. The worker accepts a content message
@@ -240,7 +240,7 @@ way, and is a pure function over plain data in `packages/core/src/domain/viewing
 - **Not content.** Media under 120 s is ad time: it adds no coverage, ends nothing and opens
   nothing. A muted element never starts a viewing (autoplay previews and trailers are muted). An
   ad the sample or the module reports adds no coverage and ends nothing.
-- **The account's lines.** The person sets them in MediaTracker, for every connected service, and
+- **The account's lines.** The person sets them in Scenola, for every connected service, and
   the extension reads them with the connection check: a **finish line** of 50, 70 or 90 % (70
   while none was read), and an optional **start line** for films (a share and a floor in
   seconds; off by default). Both are drawn on the numbers the play sends:
@@ -306,7 +306,7 @@ for that play ("no longer tracked"). A receipt is display
 only: nothing in the extension decides from it, and a state it has not seen renders as an
 unknown, unsettled answer.
 
-**_Waiting for you_** in the popup lists the plays MediaTracker is asking the person about
+**_Waiting for you_** in the popup lists the plays Scenola is asking the person about
 (`needs_confirmation`, `held`). Plays one answer settles share the receipt's opaque
 `question_key` and show as one row, labelled from the extension's own plays ("Show · S1 E2–E6"),
 linking to the question in the web app. **_Recently_** lists the last plays and starts with the
@@ -465,7 +465,7 @@ the sandbox page, which starts it as a worker.
   contexts at every start; `chrome.storage.session` holds what may be lost (the DPoP nonce, a
   sign-in in progress). Diagnostics pass one scrubber and never take titles, URLs or page text.
 - **No analytics, telemetry, crash reports or third parties.** The only network peer is the
-  configured MediaTracker API.
+  configured Scenola API.
 - **The store build's checks** (`apps/extension/build/manifest.ts`, `config-rules.ts`,
   `output-check.ts`): the manifest's permissions and policy are checked after it is written; a
   store build needs public `https:` origins and PKCE sign-in only, carries no development key, no

@@ -4,7 +4,7 @@
 
 // Step 1, *Connect*: what the extension does and does not do, what it reads and what it sends,
 // one button that opens the sign-in window, and — if the window closes without connecting —
-// what happened, plainly, naming MediaTracker Plus. Already connected, it says so and moves on.
+// what happened, plainly, naming Scenola Plus. Already connected, it says so and moves on.
 //
 // The data statement sits above the button, on the page Chrome opens at install: the store's
 // policy asks for a disclosure inside the product, before the person agrees, not only in a

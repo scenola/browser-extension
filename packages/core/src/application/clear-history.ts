@@ -13,8 +13,8 @@ interface Deps {
 }
 
 /**
- * *Clear history*: every play already sent and what MediaTracker answered about it leave this
- * browser, those still waiting for an answer included; the diary in MediaTracker keeps them.
+ * *Clear history*: every play already sent and what Scenola answered about it leave this
+ * browser, those still waiting for an answer included; the diary in Scenola keeps them.
  * Plays not sent yet, open viewings, the settings and the connection stay.
  *
  * Inside the viewing lock, so no report runs between the two steps: a viewing that knew its play

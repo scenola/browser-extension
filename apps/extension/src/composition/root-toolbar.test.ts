@@ -132,14 +132,14 @@ describe('the toolbar icon says whether a tab is tracked', () => {
     const t = toolbar();
     await t.h.root.onWake();
     expect(t.mark(null)).toBe('dimmed');
-    expect(await t.title(null)).toBe("MediaTracker isn't tracking this page");
+    expect(await t.title(null)).toBe("Scenola isn't tracking this page");
   });
 
   test('a tracked page that finished loading is the outline mark, with no video playing', async () => {
     const t = toolbar();
     await t.h.root.onTabAt(5, PRIME_FILM, false);
     expect(t.mark(5)).toBe('outline');
-    expect(await t.title(5)).toBe('MediaTracker — nothing playing');
+    expect(await t.title(5)).toBe('Scenola — nothing playing');
   });
 
   test('an address Chrome does not give leaves the tab on the default: nothing is set for it', async () => {
@@ -204,7 +204,7 @@ describe('the toolbar icon says whether a tab is tracked', () => {
     t.h.clock.set(T0 + 3_600_000 + 1_000);
     await t.h.root.onAlarm('status');
     expect(t.mark(5)).toBe('outline');
-    expect(await t.title(5)).toBe('MediaTracker — nothing playing');
+    expect(await t.title(5)).toBe('Scenola — nothing playing');
   });
 
   test('a tab that loads another page is left to Chrome’s default until its bootstrap reports', async () => {

@@ -100,7 +100,7 @@ test('the toolbar says whether the tab is tracked: ready on load, recording whil
   const page = await context.newPage();
   await page.goto(NETFLIX.episode());
   // A tracked page with nothing playing is ready, from its address on load.
-  await expect.poll(titleOfActiveTab, { timeout: 15_000 }).toBe('MediaTracker — nothing playing');
+  await expect.poll(titleOfActiveTab, { timeout: 15_000 }).toBe('Scenola — nothing playing');
 
   await page.evaluate(() => window.e2e.watch());
   await page.evaluate(() => {
@@ -110,7 +110,5 @@ test('the toolbar says whether the tab is tracked: ready on load, recording whil
 
   // Leaving for a page the extension does not run on: Chrome's default again.
   await page.goto('about:blank');
-  await expect
-    .poll(titleOfActiveTab, { timeout: 15_000 })
-    .toBe("MediaTracker isn't tracking this page");
+  await expect.poll(titleOfActiveTab, { timeout: 15_000 }).toBe("Scenola isn't tracking this page");
 });

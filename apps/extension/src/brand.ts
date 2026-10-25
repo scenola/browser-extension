@@ -7,7 +7,10 @@
 // file and nothing else.
 
 /** The service the extension adds viewings to. */
-export const PRODUCT_NAME = 'MediaTracker';
+export const PRODUCT_NAME = 'Scenola';
 
-/** The extension's own name: the store listing, the manifest, the toolbar. */
-export const EXTENSION_NAME = 'MediaTracker for Chrome';
+/**
+ * The extension's own name: the store listing, the manifest, the toolbar. It names no browser,
+ * so one manifest serves every store. A sentence calls the extension "the {product} extension".
+ */
+export const EXTENSION_NAME = 'Scenola - Movie & TV Tracker';

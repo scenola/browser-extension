@@ -197,7 +197,7 @@ describe('Settings opened at an anchor', () => {
     window.location.hash = '#data';
     render(<Options ui={page(DEFAULT_RULE).ui} />);
     await waitFor(() => {
-      expect(document.activeElement?.textContent).toBe('What MediaTracker for Chrome keeps');
+      expect(document.activeElement?.textContent).toBe('What the Scenola extension keeps');
     });
   });
 

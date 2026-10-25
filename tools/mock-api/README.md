@@ -1,6 +1,6 @@
 # The mock API
 
-A local stand-in for the MediaTracker routes the extension uses, so a contributor can run the
+A local stand-in for the Scenola routes the extension uses, so a contributor can run the
 extension without the private backend, and the end-to-end tests can drive every answer the
 server gives. It behaves as the server does — the backend line each rule mirrors is named in the
 code beside it — so code that passes against the mock passes against the server.

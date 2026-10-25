@@ -1,14 +1,14 @@
-# MediaTracker for Chrome
+# Scenola - Movie & TV Tracker
 
-Adds the films and episodes you watch to your MediaTracker diary, without opening the app. Watch
+Adds the films and episodes you watch to your Scenola diary, without opening the app. Watch
 a film or an episode on a streaming site; once you have watched your share of it, it is in your
 diary, and your library moves as if you had marked it watched yourself.
 
-MediaTracker for Chrome observes and reports; MediaTracker decides what you watched. When the
+The extension observes and reports; Scenola decides what you watched. When the
 evidence agrees on exactly one title, the viewing is added and nothing asks you anything. When
-it does not, MediaTracker asks you once, in the app, and remembers your answer for that title.
+it does not, Scenola asks you once, in the app, and remembers your answer for that title.
 
-It needs a MediaTracker Plus account.
+It needs a Scenola Plus account.
 
 ## What it tracks
 
@@ -21,15 +21,15 @@ It needs a MediaTracker Plus account.
   film or an episode, or a series whose address names the episode; a course, a news clip or a
   social video is not tracked, and the popup says why.
 - **Viewings that reach your line.** A viewing is added the moment you have played your
-  MediaTracker account's share of its story: 50 %, 70 % or 90 %, chosen in MediaTracker for
+  Scenola account's share of its story: 50 %, 70 % or 90 %, chosen in Scenola for
   every connected service (70 % to begin with). At 50 %, that is as soon as half of the story has
   played, wherever you are in it; the popup says the line while it plays. The story runs from the
   end of a skipped intro to the start of the credits, so long end titles never hold a viewing
   back, and skipped time is never played. It counts across as many sittings as it took, none more
   than a week after the last, and it is added once. A film you skimmed or stopped short of the
   line is never sent as a viewing, and a trailer, a preview or an ad is never sent at all.
-- **Films you start, if your MediaTracker account saves them** (off unless you turn it on in
-  MediaTracker): one start once you have played past the account's line, so the film shows as
+- **Films you start, if your Scenola account saves them** (off unless you turn it on in
+  Scenola): one start once you have played past the account's line, so the film shows as
   in progress.
 - **Never** YouTube, or sites on russian domains (`.ru` and `.рф`): they are blocked, whatever
   you allow.
@@ -51,17 +51,17 @@ pnpm build
 Then open `chrome://extensions`, turn on **Developer mode**, choose **Load unpacked** and pick
 `apps/extension/.output/chrome-mv3`.
 
-A development build talks to a MediaTracker running on your own machine
+A development build talks to a Scenola running on your own machine
 (`http://localhost:8000`, the web app on `http://localhost:3000`). To try the extension with no
-account and no backend, run `pnpm dev`: it starts a local stand-in for MediaTracker and a build
+account and no backend, run `pnpm dev`: it starts a local stand-in for Scenola and a build
 pointed at it. [CONTRIBUTING.md](CONTRIBUTING.md) has the rest.
 
 ## Privacy, in short
 
 - **What leaves your browser:** only a viewing that reached your line — its titles and years, its
   season and episode, the service's own ids for it when the page states them, when you watched it
-  and how far — sent to MediaTracker over your connection; never the page's address, its title or your
-  account name on the service. Then the extension reads back what MediaTracker did with it.
+  and how far — sent to Scenola over your connection; never the page's address, its title or your
+  account name on the service. Then the extension reads back what Scenola did with it.
   Nothing else, to anyone: no analytics, no telemetry, no crash reports, no third parties, no
   catalogue lookups.
 - **What stays:** what is playing, until the viewing is finished or a week passes; what was sent
@@ -113,4 +113,4 @@ it serves. That is why the fingerprint exists.
 - Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 - How it is built, and the rules a change must respect: [docs/architecture.md](docs/architecture.md).
 
-MediaTracker for Chrome is free software under the [Mozilla Public License 2.0](LICENSE).
+The Scenola extension is free software under the [Mozilla Public License 2.0](LICENSE).

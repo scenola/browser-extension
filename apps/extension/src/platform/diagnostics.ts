@@ -22,7 +22,7 @@ const DETAIL_KEY = /^[A-Za-z][A-Za-z0-9_]{0,31}$/u;
 
 // Each pattern is linear — one character class per quantifier — and runs on a capped input. None
 // is anchored to a word boundary: a token glued to the word before it is still a token.
-/** MediaTracker's credentials and refresh-style tokens (`mts_ext_…`, `mts_pat_…`, `mt_rt_…`). */
+/** Scenola's credentials and refresh-style tokens (`mts_ext_…`, `mts_pat_…`, `mt_rt_…`). */
 const MT_TOKEN = /(?:mts|mt_rt)_[A-Za-z0-9_]+/gu;
 /** An `Authorization` value: the scheme kept, the credential dropped. */
 const AUTH_HEADER = /(DPoP|Bearer)\s+[^\s,;]+/giu;

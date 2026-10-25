@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// *Recently*: the last ten plays with MediaTracker's verdict in words, and when. Each row opens
+// *Recently*: the last ten plays with Scenola's verdict in words, and when. Each row opens
 // *What was sent* — the exact body, the time and the answer — the transparency promise one tap
 // away. The glyph repeats the verdict's tone; the words carry it.
 

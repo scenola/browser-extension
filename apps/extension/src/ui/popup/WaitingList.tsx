@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// *Waiting for you*: the questions MediaTracker is asking the person, one row each however many
+// *Waiting for you*: the questions Scenola is asking the person, one row each however many
 // plays one answer settles, with one link to Up Next in the web app. It is the popup's one
 // signal, so its glyph is the lamp; the words beside it say the same. It disappears when every
 // play is answered.

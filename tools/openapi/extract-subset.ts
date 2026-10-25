@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// The part of MediaTracker's API document this public repository may hold: the routes the
+// The part of Scenola's API document this public repository may hold: the routes the
 // extension calls and what they reach, nothing else. Pure: a document in,
 // a document out; `sync.ts` does the reading and writing.
 
@@ -25,8 +25,12 @@ export const EXTENSION_OPERATIONS = [
   'GET /v1/integrations/connection',
 ] as const;
 
+// The subset names itself rather than taking the backend's title, so the product's name here
+// does not wait on the backend's.
+const SUBSET_TITLE = 'Scenola API';
+
 const SUBSET_NOTE =
-  'The routes MediaTracker for Chrome calls, extracted from the backend’s API document by ' +
+  'The routes the Scenola extension calls, extracted from the backend’s API document by ' +
   '`tools/openapi/extract-subset.ts`. Generated: change it with `pnpm openapi:sync`, never by hand.';
 
 const METHODS = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'] as const;
@@ -320,7 +324,7 @@ export function extractSubset(spec: OpenApiDoc, operations: readonly string[]): 
 
   const subset: JsonObject = {
     openapi: spec.openapi,
-    info: { title: info.title, version: info.version, description: SUBSET_NOTE },
+    info: { title: SUBSET_TITLE, version: info.version, description: SUBSET_NOTE },
     paths,
     ...(Object.keys(components).length > 0 ? { components } : {}),
     ...(tags.length > 0 ? { tags } : {}),
@@ -414,9 +418,13 @@ function tagsUsed(spec: OpenApiDoc, keptOperations: readonly JsonObject[]): Json
     .map((t) => pick(t, TAG_KEYS));
 }
 
-/** The subset's own note, the one piece of prose it carries: where it came from. */
+/** The subset's own title and note, the one piece of prose it carries: where it came from. */
 function withNote(subset: OpenApiDoc): OpenApiDoc {
-  const info: JsonObject = { ...objectAt(subset.info, 'info'), description: SUBSET_NOTE };
+  const info: JsonObject = {
+    ...objectAt(subset.info, 'info'),
+    title: SUBSET_TITLE,
+    description: SUBSET_NOTE,
+  };
   // Keys stay in code-unit order, as everywhere else in the subset.
   const sorted = Object.fromEntries(
     Object.keys(info)

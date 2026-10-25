@@ -16,7 +16,7 @@ const PARAMS = {
 };
 
 const PINNED =
-  'https://app.mediatracker.example/connect/extension' +
+  'https://app.scenola.example/connect/extension' +
   '?client=chrome_extension' +
   '&redirect_uri=https%3A%2F%2Fabcdefghijklmnopabcdefghijklmnop.chromiumapp.org%2F' +
   '&code_challenge=E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM' +
@@ -26,11 +26,11 @@ const PINNED =
 
 describe('buildApprovalUrl', () => {
   test('is exactly the pinned URL for fixed inputs', () => {
-    expect(buildApprovalUrl('https://app.mediatracker.example', PARAMS)).toBe(PINNED);
+    expect(buildApprovalUrl('https://app.scenola.example', PARAMS)).toBe(PINNED);
   });
 
   test('a trailing slash on the web base changes nothing', () => {
-    expect(buildApprovalUrl('https://app.mediatracker.example/', PARAMS)).toBe(PINNED);
+    expect(buildApprovalUrl('https://app.scenola.example/', PARAMS)).toBe(PINNED);
   });
 
   test('a web base with a path keeps it', () => {
@@ -45,7 +45,7 @@ describe('buildApprovalUrl', () => {
       jkt: 'j=k+l %2F',
       state: 's&client=evil&state=other',
     };
-    const url = new URL(buildApprovalUrl('https://app.mediatracker.example', hostile));
+    const url = new URL(buildApprovalUrl('https://app.scenola.example', hostile));
     const q = url.searchParams;
     expect([...q.keys()]).toEqual([
       'client',
@@ -65,12 +65,12 @@ describe('buildApprovalUrl', () => {
   });
 
   test.each([
-    ['not a URL', 'app.mediatracker.example'],
+    ['not a URL', 'app.scenola.example'],
     ['not http(s)', 'javascript:alert(1)'],
-    ['ftp', 'ftp://app.mediatracker.example'],
-    ['userinfo', 'https://user:pass@app.mediatracker.example'],
-    ['a query', 'https://app.mediatracker.example/?next=/x'],
-    ['a fragment', 'https://app.mediatracker.example/#x'],
+    ['ftp', 'ftp://app.scenola.example'],
+    ['userinfo', 'https://user:pass@app.scenola.example'],
+    ['a query', 'https://app.scenola.example/?next=/x'],
+    ['a fragment', 'https://app.scenola.example/#x'],
   ])('refuses a web base that is %s (bad_url) — a configuration error, loudly', (_name, base) => {
     expect(() => buildApprovalUrl(base, PARAMS)).toThrow(ProtocolInputError);
     try {

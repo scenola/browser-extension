@@ -219,7 +219,7 @@ describe('the states a site already has keep their lines', () => {
       reason: null,
     };
     render(<Popup ui={fakeUi(popupState(playing)).ui} />);
-    expect(screen.getByText("MediaTracker doesn't track this site")).toBeTruthy();
+    expect(screen.getByText("Scenola doesn't track this site")).toBeTruthy();
   });
 });
 

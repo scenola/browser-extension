@@ -11,7 +11,7 @@ a development build is welcome; please do not test against other people's accoun
 will hear back from the maintainer, and the fix is released before the details are made public,
 with your name in the release notes if you want it there.
 
-Reports about MediaTracker's own servers or apps are welcome the same way.
+Reports about Scenola's own servers or apps are welcome the same way.
 
 ## Supported versions
 

@@ -57,7 +57,7 @@ describe("nothing that looks like the person stays in the URL's path", () => {
     ['an e-mail address', '/profiles/jane.doe@example.com/watch/1', '/profiles/<redacted>/watch/1'],
     ['a percent-encoded one', '/u/jane.doe%40example.com/watch/1', '/u/<redacted>/watch/1'],
     ['a JWT', `/s/${JWT}/watch/1`, '/s/<redacted>/watch/1'],
-    ['a MediaTracker token', '/t/mts_pat_abcdef/watch', '/t/<redacted>/watch'],
+    ['a Scenola token', '/t/mts_pat_abcdef/watch', '/t/<redacted>/watch'],
   ])('%s in a segment becomes "<redacted>", the rest of the path kept', (_what, path, clean) => {
     expect(sanitizeSnapshot(withPath(path)).url.pathname).toBe(clean);
   });

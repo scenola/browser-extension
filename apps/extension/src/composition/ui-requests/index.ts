@@ -467,7 +467,7 @@ export class UiRequests {
         ])
       : [[], [], []];
     return {
-      format: 'mediatracker-extension-export',
+      format: 'scenola-extension-export',
       version: 1,
       exportedAt: new Date(clock.now()).toISOString(),
       build: { mode: buildMode },

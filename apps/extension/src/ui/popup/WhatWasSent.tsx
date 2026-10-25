@@ -3,7 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
 // *What was sent*: for one play, the exact JSON body that left the browser, when, and
-// MediaTracker's answer — or, for a play not sent yet, why. A recorded play links to its title in
+// Scenola's answer — or, for a play not sent yet, why. A recorded play links to its title in
 // the web app, where a wrong one is fixed: the connection cannot change the diary.
 
 import { useEffect, useRef, useState } from 'preact/hooks';

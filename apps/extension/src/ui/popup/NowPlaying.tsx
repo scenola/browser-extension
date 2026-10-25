@@ -5,7 +5,7 @@
 // *Now playing*: what the page says is playing — the extension knows nothing else —
 // how far it has got, and one state line: *Added at 70 %* (the account's finish line, where the
 // viewing is added the moment it is reached) · *Added* · *Not tracked on this site* ·
-// *MediaTracker doesn't track this site* · *Skipped*.
+// *Scenola doesn't track this site* · *Skipped*.
 // *Skip* is the person's to volunteer: "don't add this viewing". *Track this site* is the site
 // card's (`SiteCard`), which reads the tab's site whether or not anything plays.
 //

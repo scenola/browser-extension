@@ -21,8 +21,8 @@ let asked: unknown[] = [];
 
 /** A frame no bootstrap has run in yet. */
 function freshFrame(): void {
-  Reflect.deleteProperty(globalThis, Symbol.for('mediatracker.bootstrap'));
-  Reflect.deleteProperty(globalThis, Symbol.for('mediatracker.bootstrap-alive'));
+  Reflect.deleteProperty(globalThis, Symbol.for('scenola.bootstrap'));
+  Reflect.deleteProperty(globalThis, Symbol.for('scenola.bootstrap-alive'));
 }
 
 beforeEach(() => {

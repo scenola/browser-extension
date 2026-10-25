@@ -20,7 +20,7 @@ import type {
   Viewing,
 } from '@mt/core';
 
-const DATABASE_NAME = 'mediatracker';
+const DATABASE_NAME = 'scenola';
 const DATABASE_VERSION = 1;
 
 /** A viewing as stored: the viewing, with its title key alongside for the `titleKey` index. */

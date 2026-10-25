@@ -258,7 +258,7 @@ export const test = base.extend<Fixtures>({
       const options = await context.newPage();
       await options.goto(`chrome-extension://${id}/options.html`);
       const connection = options.getByRole('region', { name: 'Connection' });
-      await connection.getByRole('button', { name: 'Connect MediaTracker' }).click();
+      await connection.getByRole('button', { name: 'Connect Scenola' }).click();
       await expect(connection.getByText('Connected since')).toBeVisible({ timeout: 20_000 });
       await options.close();
       for (const page of context.pages()) {
@@ -329,7 +329,7 @@ export const test = base.extend<Fixtures>({
         if (target !== undefined) {
           const view = await attach(target);
           opened.push(view);
-          await view.waitForText('MediaTracker');
+          await view.waitForText('Scenola');
           return view;
         }
         await new Promise((r) => setTimeout(r, 100));
@@ -352,8 +352,8 @@ export const test = base.extend<Fixtures>({
           func: () => {
             const slots = globalThis as unknown as Record<symbol, unknown>;
             return {
-              collector: slots[Symbol.for('mediatracker.collector')] != null,
-              bootstrap: slots[Symbol.for('mediatracker.bootstrap')] != null,
+              collector: slots[Symbol.for('scenola.collector')] != null,
+              bootstrap: slots[Symbol.for('scenola.bootstrap')] != null,
             };
           },
         });

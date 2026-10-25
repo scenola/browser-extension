@@ -147,7 +147,7 @@ describe('Disconnect from this browser', () => {
     expect(group.textContent).toMatch(/what you're watching now/u);
     expect(group.textContent).toMatch(/plays not sent yet/u);
     expect(group.textContent).toMatch(/Your settings and sites stay/u);
-    expect(group.textContent).toMatch(/Plays already sent stay in your MediaTracker account/u);
+    expect(group.textContent).toMatch(/Plays already sent stay in your Scenola account/u);
     expect(
       within(group)
         .getByRole('link', { name: /Connected services/u })

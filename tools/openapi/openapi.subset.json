@@ -714,8 +714,8 @@
     }
   },
   "info": {
-    "description": "The routes MediaTracker for Chrome calls, extracted from the backend’s API document by `tools/openapi/extract-subset.ts`. Generated: change it with `pnpm openapi:sync`, never by hand.",
-    "title": "MediaTracker Backend",
+    "description": "The routes the Scenola extension calls, extracted from the backend’s API document by `tools/openapi/extract-subset.ts`. Generated: change it with `pnpm openapi:sync`, never by hand.",
+    "title": "Scenola API",
     "version": "0.1.0"
   },
   "openapi": "3.1.0",

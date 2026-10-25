@@ -138,8 +138,8 @@ describe('strings that look like the person', () => {
     ['an e-mail address', 'jane.doe@example.com', counts({ emails: 1 })],
     ['an internationalised e-mail address', 'josé@example.com', counts({ emails: 1 })],
     ['a JWT', JWT, counts({ tokens: 1 })],
-    ['a MediaTracker access token', 'mts_pat_abcdef', counts({ tokens: 1 })],
-    ['a MediaTracker refresh token', 'mt_rt_abcdef', counts({ tokens: 1 })],
+    ['a Scenola access token', 'mts_pat_abcdef', counts({ tokens: 1 })],
+    ['a Scenola refresh token', 'mt_rt_abcdef', counts({ tokens: 1 })],
     ['a link with a query', 'https://x.example/a?b=1', counts({ links_with_query: 1 })],
     [
       'a link with a query after text',

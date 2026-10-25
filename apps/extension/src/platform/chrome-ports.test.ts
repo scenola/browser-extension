@@ -170,7 +170,7 @@ describe('ActionStatusDisplay', () => {
 
   // The tooltip always says the state in words.
   test.each([
-    [{ key: 'status.idle', params: {} }, 'MediaTracker — nothing playing'],
+    [{ key: 'status.idle', params: {} }, 'Scenola — nothing playing'],
     [
       { key: 'status.tracking', params: { label: 'Breaking Bad · S1 E2' } },
       'Tracking: Breaking Bad · S1 E2',
@@ -179,7 +179,7 @@ describe('ActionStatusDisplay', () => {
       { key: 'status.added', params: { label: 'Breaking Bad · S1 E2' } },
       'Added to your diary: Breaking Bad · S1 E2',
     ],
-    [{ key: 'status.waiting', params: { count: 2 } }, '2 viewings to confirm in MediaTracker'],
+    [{ key: 'status.waiting', params: { count: 2 } }, '2 viewings to confirm in Scenola'],
   ] as const)('the tooltip of %j is “%s”', async (tooltip, words) => {
     await new ActionStatusDisplay(fakeBrowser.action).show(6, status({ tooltip }));
     expect(await fakeBrowser.action.getTitle({ tabId: 6 })).toBe(words);

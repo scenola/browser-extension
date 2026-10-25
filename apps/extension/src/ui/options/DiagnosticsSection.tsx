@@ -175,7 +175,7 @@ export function DiagnosticsSection({
       .then((entries) => {
         setCount(entries.length);
         const now = Date.now();
-        const file = { format: 'mediatracker-extension-diagnostics', version: 1, entries };
+        const file = { format: 'scenola-extension-diagnostics', version: 1, entries };
         // Scrubbed on the way in; a file that still holds sign-in material is not saved.
         if (holdsSecret(file)) {
           setNote('log_failed');

@@ -371,9 +371,9 @@ describe('About', () => {
   });
 
   // Readings, settings and receipts never leave; the finished viewing and the credential go to
-  // MediaTracker; the diagnostics log only if the person attaches it. Two more rows: a film's
+  // Scenola; the diagnostics log only if the person attaches it. Two more rows: a film's
   // start, which leaves like a play, and the account's start rule, which does not. And which
-  // account the connection acts for, which comes from MediaTracker and never leaves.
+  // account the connection acts for, which comes from Scenola and never leaves.
   test('the data inventory: nine kinds of data, four that can leave the browser', async () => {
     const page = await rootUi({ now: T0 });
     render(<Options ui={page.ui} />);

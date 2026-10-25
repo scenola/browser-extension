@@ -4,7 +4,7 @@
 
 // Connecting, as the welcome page and the settings page share it: which strategy this build
 // connects with, the `ui/connect` request, and what each answer is in words. A cancel and a
-// refusal look the same to the extension, so a closed window names MediaTracker Plus as well.
+// refusal look the same to the extension, so a closed window names Scenola Plus as well.
 
 import type { ConnectResult } from '@mt/core';
 import { useState } from 'preact/hooks';

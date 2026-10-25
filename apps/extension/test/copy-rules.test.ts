@@ -4,7 +4,7 @@
 
 // The copy rules: no "scrobble", "credential" or "DPoP" in anything a person reads;
 // "russia"/"russian" in lower case; and the product's names only from `src/brand.ts` — a message
-// carries `{product}` / `{extension}`, and no string in the code spells "MediaTracker" itself.
+// carries `{product}` / `{extension}`, and no string in the code spells "Scenola" itself.
 // The rendered pages are checked in src/ui/rendered-copy.test.tsx; this file checks every
 // catalog and every string literal.
 
@@ -20,7 +20,7 @@ const MESSAGES = join(APP, 'src/i18n/messages');
 
 /** The words that never appear in copy, as whole words or parts of one ("Scrobbling"). */
 const JARGON = /scrobbl|credential|dpop/iu;
-const PRODUCT = 'MediaTracker';
+const PRODUCT = 'Scenola';
 
 /** Every occurrence of "russia…" in `text` that is not written in lower case. */
 function capitalisedRussia(text: string): string[] {

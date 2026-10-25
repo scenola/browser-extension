@@ -2,7 +2,7 @@
 
 Thank you for helping. The most useful contribution is a streaming service: a module that reads
 a service's own player, written from samples captured on it. You need an account on that service
-and nothing else — no MediaTracker account and no backend.
+and nothing else — no Scenola account and no backend.
 
 Read [docs/architecture.md](docs/architecture.md) for how the pieces fit and the rules a change
 must respect. Each rule there carries its reason: argue with it in an issue rather than around it
@@ -18,7 +18,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-`pnpm dev` starts **`tools/mock-api`** — a local stand-in for the MediaTracker routes the extension
+`pnpm dev` starts **`tools/mock-api`** — a local stand-in for the Scenola routes the extension
 uses, on `http://localhost:8787` — and WXT's development server, which builds the extension
 against it and opens a browser with it loaded (or load `apps/extension/.output/chrome-mv3`
 yourself: `chrome://extensions` → **Developer mode** → **Load unpacked**). Press **Connect** and
@@ -60,9 +60,9 @@ deep or too long, a file too long to hold one idea. A warning does not fail the 
 an annotation on its line. Where code goes and the budget's numbers are in
 [docs/architecture.md](docs/architecture.md#files-and-folders).
 
-### Against a local MediaTracker
+### Against a local Scenola
 
-`pnpm dev:backend` builds against the MediaTracker backend and web app running on your machine
+`pnpm dev:backend` builds against the Scenola backend and web app running on your machine
 (`http://localhost:8000` and `http://localhost:3000`). The backend accepts sign-ins only from the
 extension ids it lists: its `MT_SCROBBLING_DEV_EXTENSION_IDS` must hold the development id,
 `jhdoobobmhfplgdlhncdlemlcmcfeplg`. Every development build has that id, because the build
@@ -148,7 +148,7 @@ A pull request is reviewed against this list; checking it yourself first saves a
 - [ ] No new readability warning: what outgrew the budget is split, not excused.
 - [ ] A module change: its samples are real captures (or say `"synthetic": true`), its tests
       assert the readings, its `version` moved, and its README says what it reads and why.
-- [ ] Nothing reaches the network but the MediaTracker API, and nothing new is sent to it beyond
+- [ ] Nothing reaches the network but the Scenola API, and nothing new is sent to it beyond
       the fields of a play.
 - [ ] Untrusted input — page data, storage contents, server answers, messages — is read totally
       (an odd shape is "no value", never a throw) and bounded (lengths, counts, depth, the work
@@ -182,7 +182,7 @@ Versions follow semantic versioning; the version lives in `apps/extension/packag
 
 ## Licence
 
-MediaTracker for Chrome is under the [Mozilla Public License 2.0](LICENSE). By contributing, you
+The Scenola extension is under the [Mozilla Public License 2.0](LICENSE). By contributing, you
 license your contribution under it. Every source file starts with the licence notice; lint
 refuses a file without it, and `pnpm exec eslint --fix <file>` adds it:
 

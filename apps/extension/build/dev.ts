@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// `pnpm dev`: the extension against the local mock of the MediaTracker routes, so a
+// `pnpm dev`: the extension against the local mock of the Scenola routes, so a
 // contributor needs no account and no backend. The mock's public URL is the one the extension
 // is built with — a proof names it (`htu`), and `localhost` and `127.0.0.1` are different URLs —
 // and it stands in for the web app too (its approval page). `pnpm dev:backend` uses the local
@@ -16,7 +16,7 @@ const MOCK_PORT = 8787;
 const MOCK_URL = `http://localhost:${String(MOCK_PORT)}`;
 
 const api = await startMockApi({ port: MOCK_PORT, publicUrl: MOCK_URL });
-process.stdout.write(`Mock MediaTracker API on ${api.url}\n`);
+process.stdout.write(`Mock Scenola API on ${api.url}\n`);
 
 const wxt = spawn('pnpm', ['--filter', '@mt/extension', 'dev'], {
   stdio: 'inherit',
