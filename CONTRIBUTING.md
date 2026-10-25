@@ -10,8 +10,8 @@ in code.
 
 ## Set up
 
-You need Node 26 ([.nvmrc](.nvmrc)) and pnpm 12.6.0 (the `packageManager` in
-[package.json](package.json); `npm install --global pnpm@12.6.0`).
+You need Node 26 ([.nvmrc](.nvmrc)) and pnpm 12.14.0 (the `packageManager` in
+[package.json](package.json); `npm install --global pnpm@12.14.0`).
 
 ```sh
 pnpm install --frozen-lockfile

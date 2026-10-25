@@ -40,8 +40,8 @@ The Chrome Web Store listing comes with the first release. Until then, build it 
 
 ### Build from source
 
-You need Node 26 (see [.nvmrc](.nvmrc)) and pnpm 12.6.0 (the `packageManager` in
-[package.json](package.json); `npm install --global pnpm@12.6.0` installs it).
+You need Node 26 (see [.nvmrc](.nvmrc)) and pnpm 12.14.0 (the `packageManager` in
+[package.json](package.json); `npm install --global pnpm@12.14.0` installs it).
 
 ```sh
 pnpm install --frozen-lockfile

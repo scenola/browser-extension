@@ -1,4 +1,4 @@
-# The toolchain every job needs, in one place: pnpm from `packageManager` (12.6.0), Node from
+# The toolchain every job needs, in one place: pnpm from `packageManager` (12.14.0), Node from
 # `.nvmrc`, and an install that refuses a lockfile out of step with package.json. Every action is
 # pinned by commit; the tag beside each SHA was resolved with `git ls-remote`.
 name: Set up the toolchain
