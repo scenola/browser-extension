@@ -21,7 +21,7 @@ import { afterAll, describe, expect, it } from 'vitest';
 import { createFormatter } from '../../apps/extension/src/i18n/runtime.ts';
 import type { Formatter, Params } from '../../apps/extension/src/i18n/runtime.ts';
 import { localeFiles } from './compile';
-import { compileMessage } from './icu';
+import { compileMessage, messageFunction } from './icu';
 import { WEB_LOCALES, folderLocales } from './locales-map';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -61,6 +61,23 @@ describe('ICU messages compile to plain functions', () => {
   it('a category the language does not have is refused at compile time', () => {
     // CLDR English has no "few".
     expect(() => compileMessage('en', 'k', '{n, plural, few {#} other {#}}')).toThrow();
+  });
+
+  it('a hostile translation compiles to its own text, and its source closes nothing', () => {
+    const text = 'a "quote", a \\ backslash, a `tick`, ${p}, </script> and a\u{2028}line';
+    // ICU quotes braces and tags with apostrophes, so the text reaches the compiler as written.
+    const icu = text.replace('${p}', () => "$'{p}'").replace('</script>', "'</script>'");
+    expect(compileMessage('en', 'test.key', icu)).not.toMatch(/<\/script|\u{2028}/u);
+    expect(compiled('en', icu)({}, createFormatter('en'))).toBe(text);
+  });
+
+  it('a hostile selector stays a selector', () => {
+    const selector = '"]: 0, x: (() => { throw 1; })(), [" </script>\u{2028}';
+    const source = messageFunction([['x', 'k', { [selector]: ['chosen'], other: ['other'] }]]);
+    expect(source).not.toMatch(/<\/script|\u{2028}/u);
+    const message = runInNewContext(`(${source})`) as Message;
+    expect(message({ k: selector }, createFormatter('en'))).toBe('chosen');
+    expect(message({ k: 'else' }, createFormatter('en'))).toBe('other');
   });
 });
 

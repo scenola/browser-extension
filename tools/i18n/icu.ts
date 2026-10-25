@@ -136,7 +136,15 @@ function expression(nodes: readonly WordNode[]): string {
   return nodes.map((node) => code(node)).join(' + ');
 }
 
-export const str = (value: string): string => JSON.stringify(value);
+/**
+ * A value as a JavaScript literal: its JSON, with `<`, `>`, `/`, U+2028 and U+2029 escaped too, so
+ * a translation cannot close the code it is written into, whether a module or a script element.
+ */
+export const str = (value: unknown): string =>
+  JSON.stringify(value).replace(
+    /[<>/\u{2028}\u{2029}]/gu,
+    (ch) => `\\u${ch.charCodeAt(0).toString(16).padStart(4, '0')}`,
+  );
 
 const casesCode = (cases: WordCases): string =>
   Object.entries(cases)

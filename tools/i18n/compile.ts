@@ -198,9 +198,7 @@ export function compileWorker(
     'export const SOURCE_WORDS: DataCatalog = {',
     `  locale: ${str(SOURCE_LOCALE)},`,
     '  messages: {',
-    ...Object.entries(words.messages).map(
-      ([key, nodes]) => `    ${str(key)}: ${JSON.stringify(nodes)},`,
-    ),
+    ...Object.entries(words.messages).map(([key, nodes]) => `    ${str(key)}: ${str(nodes)},`),
     '  },',
     '};',
     '',
