@@ -74,6 +74,8 @@
   "welcome.back": "Back",
   "welcome.connect.title": "Connect {product}",
   "welcome.connect.body": "Adds what you watch to your diary. It can't read your library or anything else.",
+  "welcome.connect.data": "While a film or an episode plays on a streaming site, {extension} reads what the page says it is and how far you've got, and keeps that in this browser. Once you connect, it sends {product} what you watched: its titles, years, season and episode, when you watched it and how far. Never the page's address or anything else you browse.",
+  "welcome.connect.data_link": "Everything it keeps and sends",
   "welcome.connect.note": "If asked, sign in to {product}, then approve.",
   "welcome.connect.waiting": "Waiting for the sign-in window…",
   "welcome.connect.already": "Connected",

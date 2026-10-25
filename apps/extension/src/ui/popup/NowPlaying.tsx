@@ -29,11 +29,14 @@ import { SETTINGS_ANCHORS } from '../settings-anchors';
 import type { SettingsAnchor } from '../settings-anchors';
 import type { UiAsk } from '../store';
 
+/** The places in Settings a reason can send the person to; the others are linked from elsewhere. */
+type Fix = Extract<SettingsAnchor, 'capture' | 'services'>;
+
 /** Each reason in words, the line of detail some carry, and the place in Settings that helps. */
 const REASONS: Readonly<
   Record<
     IgnoredReason,
-    { readonly line: AppMessageKey; readonly detail?: AppMessageKey; readonly fix?: SettingsAnchor }
+    { readonly line: AppMessageKey; readonly detail?: AppMessageKey; readonly fix?: Fix }
   >
 > = {
   tracking_paused: { line: 'popup.now.state.paused' },
@@ -57,7 +60,7 @@ const REASONS: Readonly<
 };
 
 /** What each place in Settings is offered as. */
-const FIXES: Readonly<Record<SettingsAnchor, AppMessageKey>> = {
+const FIXES: Readonly<Record<Fix, AppMessageKey>> = {
   capture: 'popup.now.send_sample',
   services: 'popup.site.open_settings',
 };

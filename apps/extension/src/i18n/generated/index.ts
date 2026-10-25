@@ -339,6 +339,8 @@ export type AppMessageKey =
   | "welcome.back"
   | "welcome.connect.already"
   | "welcome.connect.body"
+  | "welcome.connect.data"
+  | "welcome.connect.data_link"
   | "welcome.connect.note"
   | "welcome.connect.title"
   | "welcome.connect.waiting"

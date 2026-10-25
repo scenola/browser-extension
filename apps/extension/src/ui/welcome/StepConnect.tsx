@@ -2,9 +2,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// Step 1, *Connect*: what the extension does and does not do, one button that opens
-// the sign-in window, and — if the window closes without connecting — what happened, plainly,
-// naming MediaTracker Plus. Already connected, it says so and moves on.
+// Step 1, *Connect*: what the extension does and does not do, what it reads and what it sends,
+// one button that opens the sign-in window, and — if the window closes without connecting —
+// what happened, plainly, naming MediaTracker Plus. Already connected, it says so and moves on.
+//
+// The data statement sits above the button, on the page Chrome opens at install: the store's
+// policy asks for a disclosure inside the product, before the person agrees, not only in a
+// privacy policy. Pressing *Connect* after it is that agreement. Its link opens the full
+// inventory in Settings, so the two never say different things in detail.
 
 import type { ConnectionState } from '@mt/core';
 
@@ -12,6 +17,7 @@ import { t } from '../../i18n/t';
 import type { UiResponse } from '../../messaging/protocol';
 import { Button } from '../components/Button';
 import { Icon } from '../components/Icon';
+import { Link } from '../components/Link';
 import {
   ConnectMessage,
   OFFERS_PERSONAL_TOKEN,
@@ -19,6 +25,7 @@ import {
   WINDOW_STRATEGY,
   useConnect,
 } from '../connect';
+import { SETTINGS_ANCHORS, settingsHref } from '../settings-anchors';
 import type { UiAsk } from '../store';
 
 export function StepConnect({
@@ -48,6 +55,12 @@ export function StepConnect({
         {t('welcome.connect.title')}
       </h1>
       <p class="mt-3 max-w-[32rem] text-body text-muted-foreground">{t('welcome.connect.body')}</p>
+      <p id="connect-data" class="mt-3 max-w-[32rem] text-body-s text-muted-foreground">
+        {t('welcome.connect.data')}
+      </p>
+      <p class="mt-2 text-body-s">
+        <Link href={settingsHref(SETTINGS_ANCHORS.data)}>{t('welcome.connect.data_link')}</Link>
+      </p>
 
       {connected ? (
         <div class="mt-8 flex flex-col items-start gap-4">
@@ -67,7 +80,7 @@ export function StepConnect({
                 variant="primary"
                 size="lg"
                 disabled={busy}
-                aria-describedby="connect-note"
+                aria-describedby="connect-data connect-note"
                 onClick={() => {
                   after(WINDOW_STRATEGY ?? 'pkce_dpop');
                 }}

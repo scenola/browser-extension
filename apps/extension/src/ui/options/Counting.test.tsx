@@ -193,6 +193,14 @@ describe('Settings opened at an anchor', () => {
     });
   });
 
+  test('#data: the inventory of what is kept is focused (the welcome page links here)', async () => {
+    window.location.hash = '#data';
+    render(<Options ui={page(DEFAULT_RULE).ui} />);
+    await waitFor(() => {
+      expect(document.activeElement?.textContent).toBe('What MediaTracker for Chrome keeps');
+    });
+  });
+
   test('a section’s own anchor is followed the same way, its heading focused', async () => {
     window.location.hash = '#counting';
     render(<Options ui={page(DEFAULT_RULE).ui} />);

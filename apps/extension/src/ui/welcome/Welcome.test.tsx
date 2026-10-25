@@ -68,6 +68,20 @@ describe('step 1: Connect', () => {
     ).toBeTruthy();
   });
 
+  test('before the Connect button, says what it reads and sends, and links to the inventory', () => {
+    render(<Welcome ui={worker(connected).ui} />);
+    const data = screen.getByText(
+      "While a film or an episode plays on a streaming site, MediaTracker for Chrome reads what the page says it is and how far you've got, and keeps that in this browser. Once you connect, it sends MediaTracker what you watched: its titles, years, season and episode, when you watched it and how far. Never the page's address or anything else you browse.",
+    );
+    const button = screen.getByRole('button', { name: 'Connect MediaTracker' });
+    // Read before the choice it informs: earlier in the page, and the button's description.
+    expect(data.compareDocumentPosition(button) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(button.getAttribute('aria-describedby')?.split(' ')).toContain(data.id);
+
+    const link = screen.getByRole('link', { name: 'Everything it keeps and sends' });
+    expect(link.getAttribute('href')).toBe('/options.html#data');
+  });
+
   test('a connect that succeeds advances to step 2, "Where to track"', async () => {
     const page = worker(connected);
     render(<Welcome ui={page.ui} />);

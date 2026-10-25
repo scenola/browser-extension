@@ -12,16 +12,23 @@ export const SETTINGS_ANCHORS = {
   capture: 'capture',
   /** The built-in services' switches, in Sites. */
   services: 'services',
+  /** The data inventory, in About: what is kept, where, whether it leaves, how long. */
+  data: 'data',
 } as const;
 
 export type SettingsAnchor = (typeof SETTINGS_ANCHORS)[keyof typeof SETTINGS_ANCHORS];
+
+/** The settings page's address at `anchor`, for a link from another extension page. */
+export function settingsHref(anchor: SettingsAnchor): string {
+  return `/options.html#${anchor}`;
+}
 
 /**
  * Opens Settings at `anchor` in a tab, and closes the popup behind it. `openOptionsPage` takes no
  * anchor, so this is a tab of its own.
  */
 export function openSettingsAt(anchor: SettingsAnchor): void {
-  void browser.tabs.create({ url: `/options.html#${anchor}` }).finally(() => {
+  void browser.tabs.create({ url: settingsHref(anchor) }).finally(() => {
     window.close();
   });
 }

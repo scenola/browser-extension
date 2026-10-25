@@ -16,6 +16,7 @@ import type { AppMessageKey } from '../../i18n/t';
 import { WEB_ROUTES } from '../../web-routes';
 import { Card, Row } from '../components/Card';
 import { Link } from '../components/Link';
+import { SETTINGS_ANCHORS } from '../settings-anchors';
 import { LICENCE_URL, NOTICES_FILE, SOURCE_REPOSITORY_URL } from '../source';
 import { Section } from './Section';
 
@@ -160,7 +161,7 @@ export function AboutSection() {
       </Card>
 
       <div>
-        <h3 class="px-1 font-display text-display-s font-semibold">
+        <h3 id={SETTINGS_ANCHORS.data} class="px-1 font-display text-display-s font-semibold">
           {t('privacy.inventory.title')}
         </h3>
         <p class="mt-1 max-w-[40rem] px-1 text-body-s text-muted-foreground">
