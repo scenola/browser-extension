@@ -1,5 +1,7 @@
 # Scenola - Movie & TV Tracker
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/scenola/browser-extension/badge)](https://scorecard.dev/viewer/?uri=github.com/scenola/browser-extension)
+
 Adds the films and episodes you watch to your Scenola diary, without opening the app. Watch
 a film or an episode on a streaming site; once you have watched your share of it, it is in your
 diary, and your library moves as if you had marked it watched yourself.

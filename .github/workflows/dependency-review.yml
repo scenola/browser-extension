@@ -1,0 +1,42 @@
+# Dependency review: what a pull request changes in the lockfile and in the workflows' pins,
+# judged against GitHub's advisory database and the licences the dependency graph reports. A
+# dependency it adds or moves to with a known vulnerability of moderate severity or more fails
+# it, a development one as much as a runtime one, since the tools run in CI and build what
+# ships; so does one under a GPL-family licence, which this MPL-2.0 code does not take
+# (CONTRIBUTING.md, *Licence*). Nothing is checked out: the action reads the comparison from
+# GitHub's API. Read-only token, every action pinned by commit.
+name: Dependency review
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Dependency review
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      # First, so it sees every connection the job makes. Audit only for now: it records them and
+      # blocks none, until the list a blocking policy would allow is known.
+      - uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: moderate
+          fail-on-scopes: runtime, development, unknown
+          # The GPL family by its current SPDX identifiers. Upstream marks `deny-licenses` for
+          # possible removal in a later major version; a version without it must move this policy
+          # to `allow-licenses`, or the licences stop being checked.
+          deny-licenses: >-
+            GPL-1.0-only, GPL-1.0-or-later, GPL-2.0-only, GPL-2.0-or-later, GPL-3.0-only,
+            GPL-3.0-or-later, LGPL-2.0-only, LGPL-2.0-or-later, LGPL-2.1-only, LGPL-2.1-or-later,
+            LGPL-3.0-only, LGPL-3.0-or-later, AGPL-1.0-only, AGPL-1.0-or-later, AGPL-3.0-only,
+            AGPL-3.0-or-later

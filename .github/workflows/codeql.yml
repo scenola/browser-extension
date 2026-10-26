@@ -35,6 +35,11 @@ jobs:
       matrix:
         language: [javascript-typescript, actions]
     steps:
+      # First, so it sees every connection the job makes. Audit only for now: it records them and
+      # blocks none, until the list a blocking policy would allow is known.
+      - uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
