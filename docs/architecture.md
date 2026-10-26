@@ -483,6 +483,13 @@ the sandbox page, which starts it as a worker.
   credential in CI — the store accepts only packages signed with a key kept offline. Dependabot
   proposes updates to the pins once they are seven days old (`.github/dependabot.yml`), and
   CodeQL analyses the code and the workflows on every pull request (`.github/workflows/codeql.yml`).
+  Dependency review fails a pull request that brings in a dependency with a known vulnerability
+  of moderate severity or more, development ones included, or one under a GPL-family licence
+  (`.github/workflows/dependency-review.yml`). OpenSSF Scorecard rates the repository's practices
+  on every push to main and weekly, into the Security tab and the README's badge
+  (`.github/workflows/scorecard.yml`); its job may run only the actions Scorecard approves, or
+  the published result is refused. Every job starts with Harden-Runner, which records the
+  network connections it makes (audit only: it blocks none yet).
 
 How to report a vulnerability: [SECURITY.md](../SECURITY.md).
 

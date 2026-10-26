@@ -1,0 +1,59 @@
+# OpenSSF Scorecard: this repository's practices against its supply-chain checks — pinned
+# dependencies, token permissions, branch rules, dangerous workflow patterns and more. On every
+# push to main, and weekly as well, so a check added to Scorecard reaches settings that have not
+# changed. Findings go to the repository's Security tab; the published result is the README's
+# badge.
+#
+# Scorecard's API accepts a published result only from a workflow that keeps its rules: no
+# workflow-level env, defaults or write permissions, and in this job no env, no container and only
+# checkout, harden-runner, scorecard, upload-artifact and upload-sarif — not even a `run:` step.
+# Every action pinned by commit.
+name: Scorecard
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '43 4 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scorecard-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    # Uploading results to code scanning, and the identity token the published result is signed
+    # with. A public repository's other settings are readable without more.
+    permissions:
+      contents: read
+      security-events: write
+      id-token: write
+    steps:
+      # First, so it sees every connection the job makes. Audit only for now: it records them and
+      # blocks none, until the list a blocking policy would allow is known.
+      - uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ossf/scorecard-action@fa7117db83c52d787ae5a89f350999701505d78e # v2.5.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+      # The SARIF in the run as well, for five days, to read a finding without the Security tab.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: scorecard-sarif
+          path: results.sarif
+          retention-days: 5
+      - uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          sarif_file: results.sarif
