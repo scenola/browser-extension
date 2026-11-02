@@ -34,17 +34,17 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@formatjs/icu-messageformat-parser": "3.5.21",
+    "@formatjs/icu-messageformat-parser": "3.5.22",
     "@resvg/resvg-js": "2.6.2",
     "@types/node": "26.6.5",
-    "dependency-cruiser": "18.6.0",
+    "dependency-cruiser": "18.7.0",
     "eslint": "10.13.0",
-    "jose": "6.2.12",
-    "knip": "6.42.0",
+    "jose": "6.2.13",
+    "knip": "6.43.0",
     "openapi-typescript": "7.13.0",
     "prettier": "3.9.10",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.71.2",
+    "typescript-eslint": "8.72.1",
     "vitest": "5.0.5"
   }
 }
