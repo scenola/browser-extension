@@ -16,7 +16,7 @@
     "@mt/api": "workspace:*",
     "@mt/core": "workspace:*",
     "@mt/services": "workspace:*",
-    "@preact/signals": "2.11.3",
+    "@preact/signals": "2.11.4",
     "idb": "8.0.4",
     "preact": "11.0.1",
     "valibot": "1.5.0"
